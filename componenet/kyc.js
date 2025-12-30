@@ -7,7 +7,7 @@ export default function KYCNotice({ show = true }) {
   if (!visible) return null;
 
   return (
-    <div className="w-full bg-[#083b52] border border-white/10 rounded-xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+    <div className="w-full max-md:hidden bg-[#083b52] border border-white/10 rounded-xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
       {/* Left */}
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-sm font-bold">

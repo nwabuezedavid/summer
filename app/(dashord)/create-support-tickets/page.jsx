@@ -1,15 +1,12 @@
 'use client';
-import { useState } from 'react';
 import Link from 'next/link';
+import { createSupportTicket } from "@/action/supportTicket";
 
-export default function page() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [file, setFile] = useState(null);
-
+export default function Page() {
   return (
     <div className="max-w-6xl mx-auto p-4">
       <div className="bg-[#062f44] border border-white/10 rounded-xl p-6 text-white">
+
         {/* Header */}
         <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-3">
           <h2 className="text-sm font-semibold">
@@ -24,71 +21,57 @@ export default function page() {
           </Link>
         </div>
 
-        {/* Ticket Title */}
-        <Field label="Ticket Title">
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ticket Title"
-            className={inputClass}
-          />
-        </Field>
+        {/* FORM */}
+        <form action={createSupportTicket} className="space-y-5">
 
-        {/* Description */}
-        <div className="mt-5">
-          <Field label="Ticket Descriptions">
+          <Field label="Ticket Title">
+            <input
+              name="title"
+              required
+              placeholder="Ticket Title"
+              className={inputClass}
+            />
+          </Field>
+
+          <Field label="Ticket Description">
             <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe your issue"
+              name="description"
+              required
               rows={5}
+              placeholder="Describe your issue"
               className={`${inputClass} resize-none`}
             />
           </Field>
-        </div>
 
-        {/* Attach Image */}
-        <div className="mt-5">
-          <label className="text-xs font-medium text-slate-300 mb-2 block">
-            Attach Image
-          </label>
+          {/* Attach Image */}
+          <div>
+            <label className="text-xs font-medium text-slate-300 mb-2 block">
+              Attach Image (optional)
+            </label>
 
-          <div className="relative border-2 border-dashed border-white/20 rounded-lg p-8 flex flex-col items-center justify-center hover:border-indigo-400 transition cursor-pointer">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0])}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
+            <div className="relative border-2 border-dashed border-white/20 rounded-lg p-8 flex flex-col items-center justify-center hover:border-indigo-400 transition cursor-pointer">
+              <input
+                type="file"
+                name="file"
+                accept="image/*"
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
 
-            {!file ? (
-              <>
-                <i className="fa fa-cloud-upload text-2xl text-slate-400 mb-2" />
-                <p className="text-xs text-slate-300">
-                  Attach Image
-                </p>
-              </>
-            ) : (
-              <p className="text-xs text-emerald-400">
-                {file.name}
+              <i className="fa fa-cloud-upload text-2xl text-slate-400 mb-2" />
+              <p className="text-xs text-slate-300">
+                Click to upload image
               </p>
-            )}
+            </div>
           </div>
-        </div>
 
-        {/* Action */}
-        <div className="mt-6">
+          {/* Action */}
           <button
-            disabled={!title || !description}
-            className={`px-8 py-3 rounded-full text-xs font-semibold transition ${
-              title && description
-                ? 'bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90'
-                : 'bg-slate-600 cursor-not-allowed'
-            }`}
+            type="submit"
+            className="px-8 py-3 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition"
           >
             ADD NEW TICKET →
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
@@ -107,7 +90,5 @@ function Field({ label, children }) {
   );
 }
 
-/* ---------------- STYLES ---------------- */
-
 const inputClass =
-  'w-full bg-[#041f2e] border border-white/20 rounded-md px-4 py-3 text-sm text-white placeholder-slate-400 outline-none transition-all duration-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/40 hover:border-white/30';
+  'w-full bg-[#041f2e] border border-white/20 rounded-md px-4 py-3 text-sm text-white placeholder-slate-400 outline-none focus:border-indigo-500';

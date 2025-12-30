@@ -2,6 +2,9 @@
 
 import prisma from "@/action/db";
 import { getSession } from "@/lib/session";
+ 
+import cloudinary from "@/action/cloudinary";
+import { redirect } from "next/navigation";
 
 export async function getInvestmentLogs() {
   const session = await getSession();
@@ -172,4 +175,57 @@ export async function getWithdrawalLogs() {
     method: w.crypto,
     createdAt: w.createdAt.toISOString().split("T")[0],
   }));
+}
+
+
+
+
+
+
+export async function createSupportTicket(formData) {
+  const session = await getSession();
+  if (!session) {
+    return { error: "Unauthorized" };
+  }
+
+  const subject = formData.get("title");
+  const message = formData.get("description");
+  const file = formData.get("file");
+
+  if (!subject || !message) {
+    return { error: "Missing required fields" };
+  }
+
+  let imageUrl = null;
+
+  // ☁️ Upload image if provided
+  if (file && file.size > 0) {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const upload = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          { folder: "support-tickets" },
+          (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          }
+        )
+        .end(buffer);
+    });
+
+    imageUrl = upload.secure_url;
+  }
+
+  await prisma.supportTicket.create({
+    data: {
+      userId: session.id,
+      subject,
+      message,
+      image: imageUrl,
+    },
+  });
+
+  redirect("/support-tickets");
 }

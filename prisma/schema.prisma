@@ -31,6 +31,7 @@ model User {
   isActive      Boolean  @default(true)
   isVerified    Boolean  @default(false) // KYC
   rank          UserRank @default(LEVEL_1)
+  UserType          Usertype @default(USER)
 
   mainBalance   Decimal  @default(0)
   profitBalance Decimal  @default(0)
@@ -188,6 +189,13 @@ model Badge {
 //////////////////////
 // SUPPORT TICKETS
 //////////////////////
+model Wallet {
+  id        Int      @id @default(autoincrement())
+  name    Int
+  address   String
+  
+  createdAt DateTime @default(now())
+}
 model SupportTicket {
   id        Int      @id @default(autoincrement())
   userId    Int
@@ -226,6 +234,11 @@ enum InvestmentStatus {
   RUNNING
   COMPLETED
   CANCELLED
+}
+enum Usertype {
+  USER
+  ADMIN
+   
 }
 
 enum CryptoType {
