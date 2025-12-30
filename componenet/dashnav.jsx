@@ -61,8 +61,7 @@ const {user,setuser} =useUser()
 
 <SidebarLink href="/add-money-log" icon="fa fa-file-invoice-dollar" label="Add Money Log" />
 
-<SidebarLink href="/wallet-exchange" icon="fa fa-wallet" label="Wallet Exchange" />
-
+ 
 <SidebarLink href="/send-money" icon="fa fa-paper-plane" label="Send Money" />
 
 <SidebarLink href="/send-money-log" icon="fa fa-clock-rotate-left" label="Send Money Log" />
