@@ -49,7 +49,7 @@ const {user,setuser} =useUser()
 
        <main className='w-full h-full overflow-auto items-left ml-10 gap-3 py-10 flex flex-col  no-scrollbar'>
        
-  <SidebarLink href="/dashboardhome" icon="fa fa-th-large" label="Dashboard" />
+  <SidebarLink href="/dashboard" icon="fa fa-th-large" label="Dashboard" />
 
 <SidebarLink href="/all-schema" icon="fa fa-database" label="All Schema" />
 

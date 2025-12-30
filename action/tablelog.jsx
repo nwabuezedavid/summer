@@ -267,18 +267,17 @@ export async function changePassword(formData) {
     return { error: "User not found" };
   }
 
-  const valid = await bcrypt.compare(currentPassword, user.password);
-  if (!valid) {
+  
+  if (!currentPassword == user.password) {
     return { error: "Current password is incorrect" };
   }
 
-  const hashed = await bcrypt.hash(newPassword, 12);
-
+  
   await prisma.user.update({
     where: { id: session.id },
-    data: { password: hashed },
+    data: { password: newPassword },
   });
 
-  revalidatePath("/profile");
+  revalidatePath("/change-password");
   return { success: "Password updated successfully" };
 }
