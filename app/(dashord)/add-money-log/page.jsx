@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import DataTable from "@/componenet/tableall";
 import { getDepositLogs } from "@/action/tablelog";
  
-
+export const runtime = "nodejs";
 /* ---------------- TABLE COLUMNS ---------------- */
 
 const columns = [
