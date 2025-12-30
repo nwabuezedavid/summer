@@ -1,6 +1,7 @@
 'use client';
+import { createSupportTicket } from '@/action/tablelog';
 import Link from 'next/link';
-import { createSupportTicket } from "@/action/supportTicket";
+ 
 
 export default function Page() {
   return (

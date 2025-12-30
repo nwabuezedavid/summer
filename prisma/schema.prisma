@@ -202,7 +202,7 @@ model SupportTicket {
   subject   String
   message   String
   status    TicketStatus @default(OPEN)
-
+  image     String?
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }

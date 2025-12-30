@@ -3,8 +3,9 @@
 import prisma from "@/action/db";
 import { getSession } from "@/lib/session";
  
-import cloudinary from "@/action/cloudinary";
+ 
 import { redirect } from "next/navigation";
+import cloudinary from "./cloundinary";
 
 export async function getInvestmentLogs() {
   const session = await getSession();
@@ -223,7 +224,7 @@ export async function createSupportTicket(formData) {
       userId: session.id,
       subject,
       message,
-      image: imageUrl,
+      image: imageUrl || null,
     },
   });
 
