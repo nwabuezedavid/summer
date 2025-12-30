@@ -1,19 +1,14 @@
 'use client';
 
+import { getSupportTickets } from "@/action/withdrwal";
 import PageHeader from "@/componenet/header";
 import DataTable from "@/componenet/tableall";
-
+import { useEffect, useState } from "react";
  
 
 const columns = [
-  {
-    key: 'subject',
-    label: 'Subject',
-  },
-  {
-    key: 'ticketId',
-    label: 'Ticket ID',
-  },
+  { key: 'subject', label: 'Subject' },
+  { key: 'ticketId', label: 'Ticket ID' },
   {
     key: 'priority',
     label: 'Priority',
@@ -23,7 +18,6 @@ const columns = [
         Medium: 'bg-yellow-500/20 text-yellow-400',
         High: 'bg-red-500/20 text-red-400',
       };
-
       return (
         <span className={`px-2 py-1 text-xs rounded ${map[value]}`}>
           {value}
@@ -40,7 +34,6 @@ const columns = [
         Pending: 'bg-yellow-500/20 text-yellow-400',
         Closed: 'bg-slate-500/20 text-slate-300',
       };
-
       return (
         <span className={`px-2 py-1 text-xs rounded ${map[value]}`}>
           {value}
@@ -48,60 +41,46 @@ const columns = [
       );
     },
   },
-  {
-    key: 'createdAt',
-    label: 'Created',
-  },
+  { key: 'createdAt', label: 'Created' },
   {
     key: 'action',
     label: 'Action',
     render: (_, row) => (
-      <button className="px-3 py-1 text-xs rounded bg-indigo-500 hover:bg-indigo-400">
+      <a
+        href={`/support-tickets/${row.id}`}
+        className="px-3 py-1 text-xs rounded bg-indigo-500 hover:bg-indigo-400"
+      >
         View
-      </button>
+      </a>
     ),
   },
 ];
 
-const data = [
-  {
-    subject: 'Unable to withdraw funds',
-    ticketId: 'TCK-10239',
-    priority: 'High',
-    status: 'Open',
-    createdAt: '2025-01-10',
-  },
-  {
-    subject: 'Deposit not credited',
-    ticketId: 'TCK-10210',
-    priority: 'Medium',
-    status: 'Pending',
-    createdAt: '2025-01-08',
-  },
-  {
-    subject: 'Account verification',
-    ticketId: 'TCK-10192',
-    priority: 'Low',
-    status: 'Closed',
-    createdAt: '2025-01-02',
-  },
-];
-
 export default function SupportTicketsPage() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getSupportTickets()
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <>
+      <PageHeader
+        title="Support Tickets"
+        actionLabel="Create Support Ticket"
+        actionHref="/create-support-tickets"
+      />
 
-            <PageHeader
-  title="Support Tickets"
-  actionLabel="Create Support Tickets"
-  actionHref="/create-support-tickets"
-/>
-    <DataTable
-      title="Support Tickets"
-      columns={columns}
-      data={data}
-      pageSize={5}
-    />
+      <DataTable
+        title="Support Tickets"
+        columns={columns}
+        data={data}
+        pageSize={5}
+        loading={loading}
+      />
     </>
   );
 }

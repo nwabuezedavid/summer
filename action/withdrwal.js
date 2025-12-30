@@ -72,3 +72,34 @@ export async function withdrawAction(formData) {
 
   redirect("/withdraw-log");
 }
+
+
+ 
+export async function getSupportTickets() {
+  const session = await getSession();
+  if (!session) return [];
+
+  const tickets = await prisma.supportTicket.findMany({
+    where: {
+      userId: session.id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  // ✅ convert to plain objects
+  return tickets.map((t) => ({
+    id: t.id,
+    subject: t.subject,
+    ticketId: `TCK-${t.id}`,
+    priority: "Medium", // optional (extend schema later)
+    status:
+      t.status === "OPEN"
+        ? "Open"
+        : t.status === "CLOSED"
+        ? "Closed"
+        : "Pending",
+    createdAt: t.createdAt.toISOString().split("T")[0],
+  }));
+}
