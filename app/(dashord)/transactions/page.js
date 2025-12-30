@@ -1,131 +1,89 @@
-'use client';
+"use client";
 
+import { useEffect, useState } from "react";
 import DataTable from "@/componenet/tableall";
-
+import { getAllTransactions } from "@/action/tablelog";
  
+
+/* ---------------- BADGE STYLES ---------------- */
+
+const TYPE_BADGE = {
+  DEPOSIT: "bg-emerald-500/20 text-emerald-400",
+  WITHDRAW: "bg-red-500/20 text-red-400",
+  TRANSFER: "bg-orange-500/20 text-orange-400",
+  INVESTMENT: "bg-indigo-500/20 text-indigo-400",
+  BONUS: "bg-pink-500/20 text-pink-400",
+};
+
+const STATUS_BADGE = {
+  Success: "bg-emerald-500/20 text-emerald-400",
+  COMPLETED: "bg-emerald-500/20 text-emerald-400",
+  RUNNING: "bg-red-500/20 text-emerald-400",
+  Pending: "bg-yellow-500/20 text-yellow-400",
+  Failed: "bg-red-500/20 text-red-400",
+};
+
+/* ---------------- COLUMNS ---------------- */
 
 const columns = [
   {
-    key: 'type',
-    label: 'Type',
-    render: (value) => {
-      const map = {
-        Deposit: 'bg-emerald-500/20 text-emerald-400',
-        Withdraw: 'bg-red-500/20 text-red-400',
-        Send: 'bg-orange-500/20 text-orange-400',
-        Invest: 'bg-indigo-500/20 text-indigo-400',
-        Referral: 'bg-pink-500/20 text-pink-400',
-      };
-
-      return (
-        <span className={`px-2 py-1 rounded text-xs ${map[value]}`}>
-          {value}
-        </span>
-      );
-    },
+    key: "type",
+    label: "Type",
+    render: (v) => (
+      <span className={`px-2 py-1 rounded text-xs ${TYPE_BADGE[v]}`}>
+        {v}
+      </span>
+    ),
   },
+  { key: "description", label: "Description" },
+  { key: "txId", label: "Transaction ID" },
   {
-    key: 'description',
-    label: 'Description',
-  },
-  {
-    key: 'txId',
-    label: 'Transaction ID',
-  },
-  {
-    key: 'amount',
-    label: 'Amount',
-    render: (value, row) => (
+    key: "amount",
+    label: "Amount",
+    render: (v, row) => (
       <span
-        className={`font-medium ${
-          row.direction === 'in'
-            ? 'text-emerald-400'
-            : 'text-red-400'
+        className={`font-semibold ${
+          row.direction === "in"
+            ? "text-emerald-400"
+            : "text-red-400"
         }`}
       >
-        {row.direction === 'in' ? '+' : '-'}
-        {value} USD
+        {row.direction === "in" ? "+" : "-"}
+        {v.toFixed(2)} USD
       </span>
     ),
   },
   {
-    key: 'status',
-    label: 'Status',
-    render: (value) => {
-      const map = {
-        Success: 'bg-emerald-500/20 text-emerald-400',
-        Pending: 'bg-yellow-500/20 text-yellow-400',
-        Failed: 'bg-red-500/20 text-red-400',
-      };
-
-      return (
-        <span className={`px-2 py-1 text-xs rounded ${map[value]}`}>
-          {value}
-        </span>
-      );
-    },
+    key: "status",
+    label: "Status",
+    render: (v) => (
+      <span className={`px-2 py-1 text-xs rounded ${STATUS_BADGE[v]}`}>
+        {v}
+      </span>
+    ),
   },
-  {
-    key: 'createdAt',
-    label: 'Date',
-  },
+  { key: "createdAt", label: "Date" },
 ];
 
-const data = [
-  {
-    type: 'Deposit',
-    description: 'Deposit via Bitcoin',
-    txId: 'TXD-82931',
-    amount: 400,
-    direction: 'in',
-    status: 'Success',
-    createdAt: 'Jan 12, 2025',
-  },
-  {
-    type: 'Withdraw',
-    description: 'Withdrawal to USDT Wallet',
-    txId: 'TXW-82912',
-    amount: 250,
-    direction: 'out',
-    status: 'Pending',
-    createdAt: 'Jan 11, 2025',
-  },
-  {
-    type: 'Send',
-    description: 'Send money to john@example.com',
-    txId: 'TXS-82901',
-    amount: 100,
-    direction: 'out',
-    status: 'Success',
-    createdAt: 'Jan 10, 2025',
-  },
-  {
-    type: 'Invest',
-    description: 'Investment in Bronze Plan',
-    txId: 'TXI-82888',
-    amount: 300,
-    direction: 'out',
-    status: 'Success',
-    createdAt: 'Jan 09, 2025',
-  },
-  {
-    type: 'Referral',
-    description: 'Referral bonus from Level 1',
-    txId: 'TXR-82870',
-    amount: 50,
-    direction: 'in',
-    status: 'Success',
-    createdAt: 'Jan 08, 2025',
-  },
-];
+export default function TransactionsPage() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-export default function page() {
+  useEffect(() => {
+    getAllTransactions()
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <DataTable
       title="All Transactions"
       columns={columns}
       data={data}
       pageSize={7}
+      loading={loading}
+      searchable
+      pagination
     />
   );
 }

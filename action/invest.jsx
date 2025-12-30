@@ -99,5 +99,5 @@ export async function investAction(formData) {
   ]);
 
   // ✅ Redirect after success
-  redirect("/investments");
+  redirect("/schema-log");
 }

@@ -1,6 +1,8 @@
 'use client';
+import { submitDeposit } from '@/action/deposit';
 import PageHeader from '@/componenet/header';
 import { useState, useEffect } from 'react';
+import { toast } from "sonner";
 
 /* ---------------- WALLET CONFIG ---------------- */
 
@@ -28,36 +30,37 @@ export default function DepositAmount() {
   const [gateway, setGateway] = useState('');
   const [amount, setAmount] = useState('');
   const [file, setFile] = useState(null);
-  const [toast, setToast] = useState(null);
+ 
 
   const wallet = WALLETS[gateway];
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    console.log(gateway , amount ,file);
     if (!gateway || !amount || !file) {
-      setToast({
-        type: 'error',
-        message: 'Please select a wallet, enter amount and upload payment proof.',
-      });
+
+      toast.error(
+       'Please select a wallet, enter amount and upload payment proof.'
+      );
       return;
     }
 
-    setToast({
-      type: 'success',
-      message: 'Deposit submitted successfully. Awaiting confirmation.',
-    });
+   
+   e.preventDefault();
+
+  const res = await submitDeposit(new FormData(e.currentTarget));
+
+  if (res?.error) {
+    toast.error(res.error); // ✅ client-only
+  } else {
+    toast.success("deposited successfully");
+  }
+ 
   };
 
   return (
     <>
-      {/* Toast */}
-      {toast && (
-        <Toast
-          type={toast.type}
-          message={toast.message}
-          onClose={() => setToast(null)}
-        />
-      )}
-<section className='!h-screen max-sm:mb-[30px]'>
+  
+<form onSubmit={handleSubmit} className='!h-screen max-sm:mb-[30px]'>
       <div className="w-full  overflow-auto bg-[#062f44] text-white rounded-xl border border-white/10 p-6 space-y-6">
         {/* Payment + Amount */}
         <PageHeader
@@ -73,6 +76,7 @@ export default function DepositAmount() {
               value={gateway}
               onChange={(e) => setGateway(e.target.value)}
               className={inputClass}
+              name='gateway'
             >
               <option value="">— Select Gateway —</option>
               {Object.entries(WALLETS).map(([key, w]) => (
@@ -91,6 +95,7 @@ export default function DepositAmount() {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="Enter amount"
+                name='amount'
                 className={`${inputClass} rounded-r-none`}
               />
               <span className={suffixClass}>USD</span>
@@ -122,6 +127,7 @@ export default function DepositAmount() {
                 <input
                   type="file"
                   accept="image/*"
+                  name='file'
                   onChange={(e) => setFile(e.target.files?.[0])}
                   className="absolute inset-0 opacity-0 cursor-pointer"
                 />
@@ -145,7 +151,8 @@ export default function DepositAmount() {
 
         {/* Action */}
         <button
-          onClick={handleSubmit}
+          
+          type='submit'
           disabled={!gateway || !amount || !file}
           className={`px-8 py-3 rounded-full text-xs font-semibold transition ${
             gateway && amount && file
@@ -156,7 +163,7 @@ export default function DepositAmount() {
           PROCEED TO PAYMENT →
         </button>
       </div>
-      </section>
+      </form>
     </>
   );
 }

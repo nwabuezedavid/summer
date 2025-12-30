@@ -1,9 +1,11 @@
 "use client"
+import { useUser } from '@/context/usecontext';
 import Link from 'next/link';
 import React from 'react'
 import { useState } from 'react';
  
 const page = () => {
+
   return (
     <div className='w-full h-[100%] max-sm:pb-[28%] py-10 overflow-auto items-center flex flex-col'>
       <Dashboard/>
@@ -332,23 +334,24 @@ export   function AllNavigations() {
 
 
 export   function Dashboard() {
+  const{user,setuser} = useUser()
   const referralUrl =
-    'https://claritycapitalinvest.com/register?invite=pTmOZyZsV';
+    `${process.env.NEXT_PUBLIC_BASE_URL}/register/user/${user?.referralCode}`;
 
   const stats = [
-    'All Transactions',
-    'Total Deposit',
-    'Total Investment',
-    'Total Profit',
-    'Total Transfer',
-    'Total Withdraw',
-    'Referral Bonus',
-    'Deposit Bonus',
-    'Investment Bonus',
-    'Total Referral',
-    'Rank Achieved',
-    'Total Ticket',
-  ];
+  { label: "All Transactions", amount: `${user.transactions?.length || 0}` },
+  { label: "Total Deposit", amount: `${user.deposits?.length || "0"}` },
+  { label: "Total Investment", amount: user.profitBalance || "0" },
+  { label: "Total Profit", amount: user.investments?.length || "0" },
+  { label: "Total Transfer", amount: `${user.transfers?.length || "0"}` },
+  { label: "Total Withdraw", amount: `${user.withdrawals?.length || "0"}` },
+  { label: "Referral Bonus", amount:  user.Bonus?.length || "0" },
+  { label: "Deposit Bonus", amount: `${user.Bonus?.length || "0"}` },
+  { label: "Investment Bonus", amount: `${user.Bonus?.length || "0"}` },
+  { label: "Total Referral", amount: user?.referrals?.length || "0" },
+  { label: "Rank Achieved", amount: user?.rank || "0" },
+  { label: "Total Ticket", amount: user.tickets?.length || "0" },
+];
 
   return (
     <div className="min-h-screen bg-[#062f44]   max-sm:hidden p-6 text-white">
@@ -357,7 +360,7 @@ export   function Dashboard() {
         {/* Level Card */}
         <div className="flex items-center gap-6">
           <div className="relative w-32 h-32 rounded-full border-4 border-yellow-400 flex flex-col items-center justify-center">
-            <span className="text-sm text-yellow-300">Level 1</span>
+        <span className="text-sm text-yellow-300">{user?.rank}</span>
             <span className="text-xs text-slate-300">Hype Member</span>
 
             <span className="absolute -top-2 -right-2 w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center text-xs">
@@ -385,7 +388,7 @@ export   function Dashboard() {
           </div>
 
           <p className="text-xs text-slate-400 mt-2">
-            1 people are joined by using this URL
+            {user.referrals?.length  || 0} people are joined by using this URL
           </p>
         </div>
       </div>
@@ -399,8 +402,8 @@ export   function Dashboard() {
           >
             <span className="absolute top-0 right-0 w-6 h-6 bg-yellow-700/40 rounded-bl-lg" />
 
-            <p className="text-xl font-semibold">$0</p>
-            <p className="text-xs text-indigo-100 mt-1">{title}</p>
+            <p className="text-xl font-semibold">${title.amount || 0}</p>
+            <p className="text-xs text-indigo-100 mt-1">{title.label  }</p>
           </div>
         ))}
       </div>

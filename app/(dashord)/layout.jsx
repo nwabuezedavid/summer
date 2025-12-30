@@ -23,19 +23,7 @@ export  default  async  function MainLayout({ children }) {
 
   const user = await prisma.user.findUnique({
     where: { id: session.id },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      avatar: true,
-      rank: true,
-      isVerified: true,
-
-      mainBalance: true,
-      profitBalance: true,
-
-      createdAt: true,
-    },
+    
   });
 
   if (!user) {

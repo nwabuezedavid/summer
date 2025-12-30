@@ -1,13 +1,35 @@
 'use client';
+import { withdrawAction } from '@/action/withdrwal';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function WithdrawMoneyPage() {
   const [method, setMethod] = useState('');
   const [amount, setAmount] = useState('');
+const handle = async (e)=>  {
+  if (!method || !amount  ) {
 
+      toast.error(
+       'Please select a wallet, enter amount  .'
+      );
+      return;
+    }
+
+   
+   e.preventDefault();
+
+  const res = await withdrawAction(new FormData(e.currentTarget));
+
+  if (res?.error) {
+    toast.error(res.error); // ✅ client-only
+  } else {
+    toast.success("withdrawal process");
+  }
+ 
+}
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <form onSubmit={handle} className="max-w-6xl mx-auto p-4">
       <div className="bg-[#062f44] border border-white/10 rounded-xl p-6 text-white">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-3">
@@ -25,11 +47,14 @@ export default function WithdrawMoneyPage() {
               value={method}
               onChange={(e) => setMethod(e.target.value)}
               className={inputClass}
+              name='method'
             >
               <option value="">Withdraw Method</option>
-              <option>Bitcoin</option>
-              <option>USDT (TRC20)</option>
-              <option>Ethereum</option>
+              <option>BTC</option>
+              <option>ETH</option>
+              <option>USDT</option>
+              <option>BNB</option>
+              <option>TRX</option>
             </select>
           </Field>
 
@@ -39,6 +64,7 @@ export default function WithdrawMoneyPage() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               className={inputClass}
+              name='amount'
             />
           </Field>
         </div>
@@ -56,7 +82,7 @@ export default function WithdrawMoneyPage() {
           WITHDRAW MONEY →
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 function Step({ step, title, subtitle, active }) {

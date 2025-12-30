@@ -2,46 +2,29 @@
 
 import { useEffect, useState } from "react";
 import DataTable from "@/componenet/tableall";
-import { getDepositLogs } from "@/action/tablelog";
+import { getDepositLogs, getInvestmentLogs } from "@/action/tablelog";
  
-
 const columns = [
-  { key: "plan", label: "amount" },
-  { key: "txId", label: "Transactions ID" },
-  {
-    key: "amount",
-    label: "Amount",
-    render: (v) => <span className="text-green-400">{v}</span>,
-  },
-  { key: "fee", label: "Fee" },
-  {
-    key: "status",
-    label: "Status",
-    render: (v) => (
-      <span
-        className={`px-2 py-1 text-xs rounded ${
-          v === "Running"
-            ? "bg-emerald-500/20 text-emerald-400"
-            : "bg-yellow-500/20 text-yellow-400"
-        }`}
-      >
-        {v}
-      </span>
-    ),
-  },
-  { key: "method", label: "Method" },
+  { key: "description", label: "Description" },
+  { key: "amount", label: "Amount" },
+  { key: "profit", label: "Profit" },
+  { key: "roi", label: "ROI" },
+  { key: "duration", label: "Duration" },
+  { key: "status", label: "Status" },
+  { key: "startedAt", label: "Start Date" },
+  { key: "endsAt", label: "End Date" },
 ];
 
 export default function DepositLogPage() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getDepositLogs().then(setData);
+    getInvestmentLogs().then(setData);
   }, []);
 
   return (
     <DataTable
-      title="All Deposit Log"
+      title="All investment Log"
       columns={columns}
       data={data}
       pageSize={5}
