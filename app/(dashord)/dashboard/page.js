@@ -3,7 +3,32 @@ import { useUser } from '@/context/usecontext';
 import Link from 'next/link';
 import React from 'react'
 import { useState } from 'react';
- 
+ export function humanizeCurrency(value, currency = "USD") {
+  if (value === null || value === undefined) return `0 ${currency}`;
+
+  const num = Number(value);
+  if (isNaN(num)) return `0 ${currency}`;
+
+  if (num >= 1_000_000_000) {
+    return `${(num / 1_000_000_000).toFixed(1).replace(/\.0$/, "")}B ${currency}`;
+  }
+
+  if (num >= 1_000_000) {
+    return `${(num / 1_000_000).toFixed(1).replace(/\.0$/, "")}M ${currency}`;
+  }
+
+  if (num >= 1_000) {
+    return `${(num / 1_000).toFixed(1).replace(/\.0$/, "")}K ${currency}`;
+  }
+
+  return `${num.toLocaleString()} ${currency}`;
+}
+export function humanizeStrict(value) {
+  return Number(value).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
 const page = () => {
 
   return (
@@ -26,6 +51,8 @@ export default page
  
 
 export   function WalletCard() {
+
+  const {user,setuser} = useUser()
   return (
     <div className="w-full min-sm:hidden max-w-sm bg-[#062f44] mt-3 flex-1 rounded-2xl p-4 text-white space-y-4">
       {/* KYC Notice */}
@@ -43,8 +70,8 @@ export   function WalletCard() {
         </div>
 
         <div className="flex-1">
-          <p className="text-sm font-semibold">Hi, David Nwabueze</p>
-          <p className="text-xs text-indigo-100">Hype Member – Level 1</p>
+          <p className="text-sm font-semibold">Hi, {user.username}</p>
+          <p className="text-xs text-indigo-100">Hype Member – {user.rank}</p>
         </div>
 
         <div className="w-6 h-6 bg-orange-600 text-black rounded-full flex items-center justify-center text-xs font-bold">
@@ -63,12 +90,12 @@ export   function WalletCard() {
 
         <div className="grid grid-cols-2 gap-4 mt-3 relative z-10">
           <div>
-            <p className="text-lg font-bold">$0.00</p>
+        <p className="text-lg font-bold">${ humanizeStrict(user.mainBalance)} </p>
             <p className="text-xs text-indigo-100">Main Wallet</p>
           </div>
 
           <div className="text-right">
-            <p className="text-lg font-bold">$0.00</p>
+            <p className="text-lg font-bold">${ humanizeStrict(user.profitBalance )} </p>
             <p className="text-xs text-indigo-100">Profit Wallet</p>
           </div>
         </div>
@@ -84,9 +111,9 @@ export   function WalletCard() {
 
       {/* Action Buttons */}
       <div className="grid grid-cols-3 gap-3">
-        <ActionBtn icon="fa-download" label="Deposit" color="bg-lime-400" />
-        <ActionBtn icon="fa-chart-line text-black " label="Investment" color="bg-[#ddcbf9] text-black " />
-        <ActionBtn icon="fa-paper-plane text-black" label="Withdraw" color="bg-[#f9cea2] text-black" />
+        <ActionBtn href={'/add-money'} icon="fa-download" label="Deposit"  color="bg-lime-400" />
+        <ActionBtn href={'/all-schema'} icon="fa-chart-line text-black " label="Investment" color="bg-[#ddcbf9] text-black " />
+        <ActionBtn href={'/withdraw'} icon="fa-paper-plane text-black" label="Withdraw" color="bg-[#f9cea2] text-black" />
       </div>
 
       <AllNavigations/>
@@ -96,9 +123,9 @@ export   function WalletCard() {
   );
 }
 
-function ActionBtn({ icon, label, color }) {
+function ActionBtn({ icon, label, color,href }) {
   return (
-    <button
+    <Link href={href}
       className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-medium ${color} ${
         color.includes('lime')
           ? 'text-black'
@@ -107,16 +134,17 @@ function ActionBtn({ icon, label, color }) {
     >
       <i className={`fa ${icon} text-sm`} />
       {label}
-    </button>
+    </Link>
   );
 }
 
  
 
 export   function RecentAndReferral() {
-  const referralUrl =
-    'https://claritycapitalinvest.com/register?invite=pTmOZyZsV';
 
+  const {user,setuser} = useUser()
+  const referralUrl =
+    `${process.env.NEXT_PUBLIC_BASE_URL}/register/user/${user?.referralCode}`;
   const copyLink = async () => {
     await navigator.clipboard.writeText(referralUrl);
   };
@@ -138,7 +166,7 @@ export   function RecentAndReferral() {
           {/* Details */}
           <div className="flex-1">
             <p className="text-sm font-medium">
-              Ranking Bonus by Level 1
+              Ranking Bonus by {user.rank}
             </p>
             <p className="text-[11px] text-slate-300">
               TRX38U80RYBDX
@@ -183,7 +211,7 @@ export   function RecentAndReferral() {
         </div>
 
         <p className="text-[10px] text-slate-400">
-          1 peoples are joined by using this URL.
+          {user?.referrals?.length || 0 } peoples are joined by using this URL.
         </p>
       </div>
     </div>
@@ -195,9 +223,41 @@ export   function RecentAndReferral() {
 
   
 
-const stats = [
-  { label: 'All Transactions', value: 1, icon: 'fa-arrow-right-arrow-left', bg: 'bg-lime-300' },
-  { label: 'Total Deposit', value: '$0', icon: 'fa-download', bg: 'bg-yellow-400' },
+
+
+export   function AllStatistic() {
+  const {user,setuser} = useUser()
+const totalDeposit = user?.deposits?.reduce(
+  (sum, d) => sum + Number(d.amount || 0),
+  0
+) || 0;
+
+const totalInvestment = user?.investments?.reduce(
+  (sum, i) => sum + Number(i.amount || 0),
+  0
+) || 0;
+
+const totalWithdraw = user?.withdrawals?.reduce(
+  (sum, w) => sum + Number(w.amount || 0),
+  0
+) || 0;
+
+const totalTransfer = user?.transfers?.reduce(
+  (sum, t) => sum + Number(t.amount || 0),
+  0
+) || 0;
+
+const referralBonus = user?.bonuses?.filter(b => b.type === "REFERRAL")
+  .reduce((sum, b) => sum + Number(b.amount || 0), 0) || 0;
+
+const depositBonus = user?.bonuses?.filter(b => b.type === "DEPOSIT")
+  .reduce((sum, b) => sum + Number(b.amount || 0), 0) || 0;
+
+const investmentBonus = user?.bonuses?.filter(b => b.type === "INVESTMENT")
+  .reduce((sum, b) => sum + Number(b.amount || 0), 0) || 0;
+  const stats = [
+  { label: 'All Transactions', value: user.transactions?.amount.sum || '0', icon: 'fa-arrow-right-arrow-left', bg: 'bg-lime-300' },
+  { label: 'Total Deposit', value: totalDeposit  , icon: 'fa-download', bg: 'bg-yellow-400' },
   { label: 'Total Investment', value: '$0', icon: 'fa-cube', bg: 'bg-purple-200' },
   { label: 'Total Profit', value: '$0', icon: 'fa-wallet', bg: 'bg-orange-300' },
   { label: 'Total Transfer', value: '$0', icon: 'fa-right-left', bg: 'bg-pink-300' },
@@ -209,8 +269,6 @@ const stats = [
   { label: 'Rank Achieved', value: 1, icon: 'fa-trophy', bg: 'bg-white' },
   { label: 'Total Ticket', value: 0, icon: 'fa-triangle-exclamation', bg: 'bg-teal-400' },
 ];
-
-export   function AllStatistic() {
   const [expanded, setExpanded] = useState(false);
 
   // show first 8 by default (matches screenshot)
@@ -261,23 +319,23 @@ export   function AllStatistic() {
 
 const navItems = [
   { label: 'Schema', icon: 'fa-diagram-project', href: '/all-schema' },
-  { label: 'Investment', icon: 'fa-chart-line', href: '/all-schema-log' },
+  { label: 'Schema log', icon: 'fa-chart-line', href: '/schema-log' },
   { label: 'Transactions', icon: 'fa-list', href: '/transactions' },
 
   { label: 'Deposit', icon: 'fa-download', href: '/add-money' },
   { label: 'Deposit Log', icon: 'fa-file-lines', href: '/add-money-log' },
   
 
-  { label: 'Transfer', icon: 'fa-right-left', href: '/transfer' },
-  { label: 'Transfer Log', icon: 'fa-clock-rotate-left', href: '/transfer-log' },
+  { label: 'Transfer', icon: 'fa-right-left', href: '/send-money' },
+  { label: 'Transfer Log', icon: 'fa-clock-rotate-left', href: '/send-money-log' },
   { label: 'Withdraw', icon: 'fa-paper-plane', href: '/withdraw' },
 
   { label: 'Withdraw Log', icon: 'fa-file-arrow-down', href: '/withdraw-log' },
-  { label: 'Ranking Badge', icon: 'fa-trophy', href: '/ranking' },
+  { label: 'Ranking Badge', icon: 'fa-trophy', href: '/ranking-badge' },
   { label: 'Referral', icon: 'fa-users', href: '/referral' },
 
   { label: 'Settings', icon: 'fa-gear', href: '/settings' },
-  { label: 'Support Ticket', icon: 'fa-headset', href: '/support' },
+  { label: 'Support Ticket', icon: 'fa-headset', href: '/support-tickets' },
   { label: 'Notifications', icon: 'fa-bell', href: '/notifications' },
 ];
 

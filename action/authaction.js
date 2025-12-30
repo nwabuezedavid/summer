@@ -78,7 +78,7 @@ export async function loginAuth(formData) {
     referredById: true,
     createdAt: true,
     updatedAt: true,
-
+    password:true,
     // relations (optional)
     investments: true,
     deposits: true,

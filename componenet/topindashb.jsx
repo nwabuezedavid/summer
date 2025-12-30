@@ -1,5 +1,7 @@
 'use client';
 
+import { logoutAction } from '@/action/authaction';
+import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 
 const languages = [
@@ -124,12 +126,11 @@ export default function TopBar(data) {
 
           {profileOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-[#062f44] border border-white/10 rounded shadow-lg z-50">
-              <MenuItem icon="fa fa-gear" label="Settings" />
-              <MenuItem icon="fa fa-lock" label="Change Password" />
-              <MenuItem icon="fa fa-headset" label="Support Tickets" />
+              <MenuItem href={'/settings'} icon="fa fa-gear" label="Settings" />
+              <MenuItem href={'/change-password'}  icon="fa fa-lock" label="Change Password" />
+              <MenuItem href={'/support-tickets'} icon="fa fa-headset" label="Support Tickets" />
               <hr className="border-white/10 my-1" />
-              <MenuItem icon="fa fa-right-from-bracket" label="Logout" danger />
-            </div>
+              <button onClick={logoutAction}   className="fa fa-right-from-bracket text-xs text-center flex items-center w-full text-red-500 p-3">logout</button>           </div>
           )}
         </div>
       </div>
@@ -137,15 +138,15 @@ export default function TopBar(data) {
   );
 }
 
-function MenuItem({ icon, label, danger }) {
+function MenuItem({ icon, label, danger ,href}) {
   return (
-    <button
+    <Link href={href}
       className={`w-full flex items-center gap-3 px-4 py-2 text-sm ${
         danger ? 'text-red-500 hover:bg-red-500/10' : 'text-white hover:bg-indigo-500'
       }`}
     >
       <i className={icon}></i>
       {label}
-    </button>
+    </Link>
   );
 }

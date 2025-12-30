@@ -2,7 +2,9 @@
 
 import prisma from "@/action/db";
 import { getSession } from "@/lib/session";
- 
+ import bcrypt from "bcrypt";
+import { revalidatePath } from "next/cache";
+
  
 import { redirect } from "next/navigation";
 import cloudinary from "./cloundinary";
@@ -229,4 +231,54 @@ export async function createSupportTicket(formData) {
   });
 
   redirect("/support-tickets");
+}
+
+ 
+ 
+
+export async function changePassword(formData) {
+  const session = await getSession();
+  if (!session) {
+    return { error: "Unauthorized" };
+  }
+
+  const currentPassword = formData.get("currentPassword");
+  const newPassword = formData.get("newPassword");
+  const confirmPassword = formData.get("confirmPassword");
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return { error: "All fields are required" };
+  }
+
+  if (newPassword.length < 8) {
+    return { error: "Password must be at least 8 characters" };
+  }
+
+  if (newPassword !== confirmPassword) {
+    return { error: "Passwords do not match" };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.id },
+    select: { password: true },
+  });
+
+  if (!user) {
+    return { error: "User not found" };
+  }
+
+  const valid = await bcrypt.compare(currentPassword, user.password);
+  if (!valid) {
+    return { error: "Current password is incorrect" };
+  }
+
+  const hashed = await bcrypt.hash(newPassword, 12);
+
+  await prisma.user.update({
+    where: { id: session.id },
+    data: { password: hashed },
+  });
+
+  revalidatePath("/profile");
+  return { success: "Password updated successfully" };
 }
