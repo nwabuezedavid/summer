@@ -260,13 +260,13 @@ export   function AllStatistic() {
 
 
 const navItems = [
-  { label: 'Schema', icon: 'fa-diagram-project', href: '/schema' },
-  { label: 'Investment', icon: 'fa-chart-line', href: '/investment' },
+  { label: 'Schema', icon: 'fa-diagram-project', href: '/all-schema' },
+  { label: 'Investment', icon: 'fa-chart-line', href: '/all-schema-log' },
   { label: 'Transactions', icon: 'fa-list', href: '/transactions' },
 
-  { label: 'Deposit', icon: 'fa-download', href: '/deposit' },
-  { label: 'Deposit Log', icon: 'fa-file-lines', href: '/deposit-log' },
-  { label: 'Wallet Exch.', icon: 'fa-wallet', href: '/wallet-exchange' },
+  { label: 'Deposit', icon: 'fa-download', href: '/add-money' },
+  { label: 'Deposit Log', icon: 'fa-file-lines', href: '/add-money-log' },
+  
 
   { label: 'Transfer', icon: 'fa-right-left', href: '/transfer' },
   { label: 'Transfer Log', icon: 'fa-clock-rotate-left', href: '/transfer-log' },
