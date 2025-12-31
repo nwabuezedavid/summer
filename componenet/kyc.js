@@ -1,9 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { matureInvestments } from '@/action/matureInvestments';
+import { useEffect, useState } from 'react';
 
 export default function KYCNotice({ show = true }) {
   const [visible, setVisible] = useState(show);
-
+useEffect(() => {
+  matureInvestments()
+}, [ ])
   if (!visible) return null;
 
   return (

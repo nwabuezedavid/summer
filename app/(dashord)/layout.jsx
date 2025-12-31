@@ -41,6 +41,7 @@ export  default  async  function MainLayout({ children }) {
   return (
 
 
+
     <>
     <UserProvider initialUser={safeUser}>
 
