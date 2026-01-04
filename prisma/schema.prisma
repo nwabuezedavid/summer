@@ -84,6 +84,7 @@ model Investment {
   amount    Decimal
   profit    Decimal
   status    InvestmentStatus @default(RUNNING)
+ type    String @default("investment")
 
   startedAt DateTime @default(now())
   endsAt    DateTime
@@ -101,11 +102,9 @@ model Deposit {
   amount    Decimal
   crypto    CryptoType
   txHash    String?  @unique
-
   proof     String?  // Proof of payment image
-
+  type    String @default("deposit")
   status    TransactionStatus @default(PENDING)
-
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }
@@ -116,11 +115,9 @@ model Withdrawal {
   amount    Decimal
   crypto    CryptoType
   wallet    String
-
+  type    String @default("withdrawal") 
   proof     String?  // Proof image (admin optional)
-
   status    TransactionStatus @default(PENDING)
-
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }
@@ -131,13 +128,12 @@ model Withdrawal {
 model Transfer {
   id         Int        @id @default(autoincrement())
   userId     Int
+  txId     String?
   amount     Decimal
-  fromWallet WalletType
-  toWallet   WalletType
-
+  statue Tranfertatus @default(PENDING)
+  email       String?   // Send money note
   note       String?   // Send money note
-  proof      String?   // Proof image
-
+  type    String @default("transfer")
   user       User      @relation(fields: [userId], references: [id])
   createdAt  DateTime  @default(now())
 }
@@ -191,7 +187,7 @@ model Badge {
 //////////////////////
 model Wallet {
   id        Int      @id @default(autoincrement())
-  name    Int
+  name    String
   address   String
   
   createdAt DateTime @default(now())
@@ -229,6 +225,11 @@ enum TransactionStatus {
   APPROVED
   REJECTED
 }
+enum Tranfertatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
 
 enum InvestmentStatus {
   RUNNING
@@ -249,10 +250,7 @@ enum CryptoType {
   TRX
 }
 
-enum WalletType {
-  MAIN
-  PROFIT
-}
+ 
 
 enum BonusType {
   REFERRAL

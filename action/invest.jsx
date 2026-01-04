@@ -4,6 +4,9 @@ import prisma from "@/action/db";
 import { getSession } from "@/lib/session";
  
 import { redirect } from "next/navigation";
+import { sendEmail } from "./mail";
+import { investmentEmail } from "./email/invest";
+import { createNotification } from "./authaction";
   
 
 export async function investAction(formData) {
@@ -65,7 +68,7 @@ export async function investAction(formData) {
   endsAt.setDate(endsAt.getDate() + plan.durationDays);
 
   // 🔄 ATOMIC TRANSACTION (VERY IMPORTANT)
-  await prisma.$transaction([
+  const inves = await prisma.$transaction([
     // 1️⃣ Deduct wallet balance
     prisma.user.update({
       where: { id: userId },
@@ -76,7 +79,7 @@ export async function investAction(formData) {
     }),
 
     // 2️⃣ Create investment
-    prisma.investment.create({
+      prisma.investment.create({
       data: {
         userId,
         planId,
@@ -84,6 +87,12 @@ export async function investAction(formData) {
         profit,
         endsAt,
       },
+      select:{
+        plan:true,
+        amount:true,
+        startedAt:true,
+        endsAt:true,
+      }
     }),
 
     // 3️⃣ Log transaction
@@ -98,6 +107,31 @@ export async function investAction(formData) {
     }),
   ]);
 
+  console.log(inves[2],'first');
+   console.log(inves[1].plan.name,'secon');
+  console.log(inves[0],'secossdsdn');
+   createNotification({
+  userId,
+  title:`Investment Activated ${plan.name}`,
+  message:`You have successfully invested ${inves[1].amount} in the ${inves[1].plan.name}. Your earnings will start accruing shortly.`,
+})
+const sjdj = await sendEmail({
+  to: session.email ,
+  subject: ` ${process.env.SITENAME}your investment ${inves[1].plan.name}`,
+  html: investmentEmail({
+    username: session?.username,
+    amount:  amount,
+    plan: inves[1].plan.name,
+    profitPercent:inves[1].plan.profitPercent,
+  duration:inves[1].plan.durationDays,
+  startDate:inves[1].startedAt,
+  endDate:inves[1].endsAt,
+  }),
+});
+
+console.log(sjdj);
+
   // ✅ Redirect after success
   redirect("/schema-log");
+   
 }

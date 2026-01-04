@@ -7,6 +7,7 @@ import { getDepositLogs, getInvestmentLogs } from "@/action/tablelog";
 const columns = [
   { key: "description", label: "Description" },
   { key: "amount", label: "Amount" },
+  { key: "type", label: "Transaction type" },
   { key: "profit", label: "Profit" },
   { key: "roi", label: "ROI" },
   { key: "duration", label: "Duration" },
@@ -19,6 +20,7 @@ export default function DepositLogPage() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    
     getInvestmentLogs().then(setData);
   }, []);
 

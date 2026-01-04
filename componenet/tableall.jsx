@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useMemo } from 'react';
 
 export default function DataTable({
@@ -91,6 +92,7 @@ export default function DataTable({
               {columns.map((col) => (
                 <th
                   key={col.key}
+                  
                   className="text-left px-4 py-3 font-medium"
                 >
                   {col.label}
@@ -117,10 +119,16 @@ export default function DataTable({
                 className="border-t border-white/10 hover:bg-[#041f2e]"
               >
                 {columns.map((col) => (
-                  <td key={col.key} className="px-4 py-3">
+                  <td    key={col.key} className="px-4 py-3">
+                   
+                   <Link href={`transactions/${row.type?.toLowerCase()}/${row?.id}`}>
+                    {console.log(row)
+                    }
+                 
                     {col.render
                       ? col.render(row[col.key], row)
                       : row[col.key]}
+                      </Link>
                   </td>
                 ))}
               </tr>

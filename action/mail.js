@@ -1,13 +1,35 @@
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  host: "mail.yourdomain.com",
-  port: 465,
-  secure: true,
+/**
+ * Singleton transporter (reused across app)
+ */
+export const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: Number(process.env.EMAIL_PORT || 587),
+  secure: false, // true only for port 465
   auth: {
-    user: "support@yourdomain.com",
-    pass: "your_email_password",
+    user: process.env.EMAIL_HOST_USER,
+    pass: process.env.EMAIL_HOST_PASSWORD,
   },
 });
 
-export default transporter;
+/**
+ * Universal email sender
+ */
+export async function sendEmail({
+  to,
+  subject,
+  html,
+  fromName = "Commonwealth Asset Trust Investment company",
+}) {
+  if (!to || !subject || !html) {
+    throw new Error("Missing email parameters");
+  }
+
+  return transporter.sendMail({
+    from: `"${fromName}" <${process.env.EMAIL_HOST_USER}>`,
+    to,
+    subject,
+    html,
+  });
+}

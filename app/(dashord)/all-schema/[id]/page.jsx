@@ -10,7 +10,7 @@ import { toast } from "sonner";
 export default   function Page({ params }) {
 
 const [data, setdata] = useState({})
-
+const [loadsub, setloadsub] = useState(false)
   useEffect(() => {
     investclientside( params )
     .then(e=>setdata(e))
@@ -25,10 +25,13 @@ const [data, setdata] = useState({})
 const handlesubmit =  async (e)=>{
    e.preventDefault();
 
-  const res = await investAction(new FormData(e.currentTarget));
-
-  if (res?.error) {
-    toast.error(res.error); // ✅ client-only
+   setloadsub(true) // ✅ client-only
+   const res = await investAction(new FormData(e.currentTarget));
+   console.log(res);
+   
+   if (res?.error) {
+    setloadsub(false) // ✅ client-only
+    toast.error(res.error);
   } else {
     toast.success("Investment successful");
   }
@@ -43,7 +46,7 @@ const handlesubmit =  async (e)=>{
       </h2>
 
       {/* FORM (POST ACTION) */}
-      <form onSubmit={handlesubmit}  method="post" className="space-y-4 text-sm">
+      <form onSubmit={handlesubmit}    method="post" className="space-y-4 text-sm">
 
         {/* Hidden Plan ID */}
         <input type="hidden" name="planId" value={data.plan?.id} />
@@ -122,15 +125,17 @@ const handlesubmit =  async (e)=>{
         <div className="flex gap-4 mt-8">
           <button
             type="submit"
-            className="px-6 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition"
+            disabled={loadsub}
+            
+            className="px-6 py-2  cursor-pointer rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition"
           >
-            ✓ INVEST NOW
+           { !loadsub ? '✓ INVEST NOW' :'loading'}
           </button>
 
           <button
-            type="button"
+           
             
-            className="px-6 py-2 rounded-full text-xs font-semibold bg-white text-black hover:bg-slate-200 transition"
+            className="px-6 cursor-pointer py-2 rounded-full text-xs font-semibold bg-white text-black hover:bg-slate-200 transition"
           >
             CANCEL
           </button>

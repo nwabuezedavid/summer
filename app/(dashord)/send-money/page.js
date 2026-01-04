@@ -1,12 +1,35 @@
 'use client';
+import { sedMoney } from '@/action/sedmoney';
 import PageHeader from '@/componenet/header';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function SendMoneyForm() {
   const [email, setEmail] = useState('');
   const [amount, setAmount] = useState('');
   const [note, setNote] = useState('');
+   const [btn, setbtn] = useState(false);
+const handleeven = async ()=>{
+    setbtn(true)
 
+  sedMoney({
+    email:email,
+    amount:amount,
+    note:note || null,
+  })
+  .then(e=> {
+    
+    toast.info(e)
+    setbtn(false)
+
+  } )
+  .catch(ex=> {
+    
+    toast.info(ex )
+    setbtn(true)
+
+  })
+}
   return (
     <div className="w-full bg-[#062f44] border border-white/10 rounded-xl p-6 text-white">
       {/* Top Row */}
@@ -22,6 +45,7 @@ export default function SendMoneyForm() {
             type="email"
             placeholder="User Email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             className={inputClass}
           />
@@ -34,6 +58,8 @@ export default function SendMoneyForm() {
               type="number"
               placeholder="Enter Amount"
               value={amount}
+            required
+
               onChange={(e) => setAmount(e.target.value)}
               className={`${inputClass} rounded-r-none`}
             />
@@ -56,6 +82,18 @@ export default function SendMoneyForm() {
             className={`${inputClass} resize-none`}
           />
         </Field>
+      <button
+          onClick={handleeven}
+          type=''
+          disabled={!email || !amount || btn}
+          className={`px-8 py-3 rounded-full mt-4 text-xs font-semibold transition ${
+            email && amount 
+              ? 'bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90'
+              : 'bg-slate-600 cursor-not-allowed'
+          }`}
+        >
+          PROCEED TO PAYMENT →
+        </button>
       </div>
     </div>
   );

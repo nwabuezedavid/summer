@@ -100,7 +100,7 @@ if (!user) {
 
  const token = createToken(plainUser);
   
-  console.log(token);
+ 
     const cookieStore = await cookies();
    cookieStore.set("session", token, {
     httpOnly: true,
@@ -262,4 +262,29 @@ const transporter = nodemailer.createTransport({
   return {sucess:'successfully sent reset mail ' , user:user} ;
 }
 
+ 
 
+/**
+ * Create a notification for a user
+ * @param {Object} params
+ * @param {number} params.userId - User ID
+ * @param {string} params.title - Notification title
+ * @param {string} params.message - Notification message
+ */
+export async function createNotification({
+  userId,
+  title,
+  message,
+}) {
+  if (!userId || !title || !message) {
+    throw new Error("Missing notification fields");
+  }
+
+  return prisma.notification.create({
+    data: {
+      userId,
+      title,
+      message,
+    },
+  });
+}

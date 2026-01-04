@@ -7,24 +7,32 @@ import { toast } from 'sonner';
 export default function WithdrawMoneyPage() {
   const [method, setMethod] = useState('');
   const [amount, setAmount] = useState('');
+  const [btn, setbtn] = useState(false);
 const handle = async (e)=>  {
+  setbtn(true)
   if (!method || !amount  ) {
 
       toast.error(
        'Please select a wallet, enter amount  .'
       );
+  setbtn(false)
+
       return;
     }
 
    
    e.preventDefault();
-
+    
   const res = await withdrawAction(new FormData(e.currentTarget));
 
   if (res?.error) {
-    toast.error(res.error); // ✅ client-only
+    toast.error(res.error);
+     setbtn(false)
+     // ✅ client-only
   } else {
     toast.success("withdrawal process");
+  setbtn(true)
+    
   }
  
 }
@@ -48,6 +56,7 @@ const handle = async (e)=>  {
               onChange={(e) => setMethod(e.target.value)}
               className={inputClass}
               name='method'
+              required
             >
               <option value="">Withdraw Method</option>
               <option>BTC</option>
@@ -78,8 +87,8 @@ const handle = async (e)=>  {
         </div>
 
         {/* Action */}
-        <button className="px-8 py-3 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition">
-          WITHDRAW MONEY →
+        <button disabled={btn} type='submit' className="px-8 py-3 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition">
+        {!btn ?'  WITHDRAW MONEY →' :'Requesting'}
         </button>
       </div>
     </form>

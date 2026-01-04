@@ -18,6 +18,7 @@ export async function getInvestmentLogs() {
       userId: session.id,
     },
     include: {
+      
       plan: {
         select: {
           name: true,
@@ -29,8 +30,7 @@ export async function getInvestmentLogs() {
     orderBy: {
       startedAt: "desc",
     },
-  });
-
+  }); 
   // ✅ Convert Prisma data → Client-safe log rows
   return investments.map((inv) => ({
     id: inv.id,
@@ -38,7 +38,7 @@ export async function getInvestmentLogs() {
     // what user sees
     description: `Investment in ${inv.plan.name}`,
     plan: inv.plan.name,
-
+type:inv.type,
     amount: `-${Number(inv.amount)} USD`,
     profit: `+${Number(inv.profit)} USD`,
 
@@ -116,10 +116,10 @@ export async function getDepositLogs() {
   const session = await getSession();
   if (!session) return [];
 
-  const logs = await prisma.transaction.findMany({
+  const logs = await prisma.deposit.findMany({
     where: {
       userId: session.id,
-      type: "DEPOSIT",
+    
     },
     orderBy: {
       createdAt: "desc",
@@ -129,10 +129,11 @@ export async function getDepositLogs() {
   // 🔁 Prisma → Client-safe
   return logs.map((l) => ({
     id: l.id,
-    description: l.title,
+    description: `depositted in ${l.crypto} `,
     txId: `TX-${l.id}`,
+    type: `deposit`,
     amount: `+${Number(l.amount)} USD`,
-    fee: `${Number(l.fee)} USD`,
+    fee: `${Number(0)} USD`,
     status:
       l.status === "APPROVED"
         ? "Success"
@@ -166,9 +167,12 @@ export async function getWithdrawalLogs() {
   // ✅ Convert Prisma data → table-safe data
   return withdrawals.map((w) => ({
     description: `Withdrawal to ${w.crypto} Wallet`,
+    id: `${w.id}`, // you can replace with real tx hash later
     txId: `WD-${w.id}`, // you can replace with real tx hash later
     amount: `-${Number(w.amount)} USD`,
     fee: "0 USD",
+    type:w.type,
+
     status:
       w.status === "PENDING"
         ? "Pending"

@@ -1,19 +1,25 @@
 'use client';
 
+import { getMonety } from "@/action/sedmoney";
 import DataTable from "@/componenet/tableall";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
- 
+
 const columns = [
   {
-    key: 'description',
+    key: 'note',
     label: 'Description',
   },
   {
     key: 'txId',
     label: 'Transaction ID',
-  },
+  }, 
+  
+  { key: "type", label: "Transaction type" },
+
   {
-    key: 'to',
+    key: 'email',
     label: 'To',
   },
   {
@@ -26,7 +32,7 @@ const columns = [
     ),
   },
   {
-    key: 'status',
+    key: 'statue',
     label: 'Status',
     render: (value) => {
       const map = {
@@ -57,22 +63,28 @@ const data = [
     status: 'Success',
     createdAt: 'Jan 12, 2025',
   },
-  {
-    description: 'Send money to user',
-    txId: 'SMX-903410',
-    to: 'mary@example.com',
-    amount: '-250 USD',
-    status: 'Pending',
-    createdAt: 'Jan 10, 2025',
-  },
+
 ];
 
 export default function SendMoneyLogPage() {
+  const [datax, setdatax] = useState([])
+  useEffect(() => {
+
+
+    getMonety()
+      .then(e => {
+        setdatax(e)
+      })
+      .catch(d => toast.error(d))
+    console.log(datax);
+
+  }, [])
+
   return (
     <DataTable
       title="Send Money Log"
       columns={columns}
-      data={data}
+      data={datax}
       pageSize={5}
     />
   );

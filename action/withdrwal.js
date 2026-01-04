@@ -3,6 +3,8 @@
 import prisma from "@/action/db";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { sendEmail } from "./mail";
+import { withdrawalEmail } from "./email/withdrawal";
 
 export async function withdrawAction(formData) {
   const session = await getSession();
@@ -69,7 +71,17 @@ export async function withdrawAction(formData) {
           : { profitBalance: { decrement: amount } },
     }),
   ]);
-
+await sendEmail({
+  to: session.email,
+  subject: "Withdrawal Request Update",
+  html: withdrawalEmail({
+    username: user.username,
+    amount: amount,
+    method: method,
+    status: "Pending",
+    txId: "TX-239203",
+  }),
+});
   redirect("/withdraw-log");
 }
 

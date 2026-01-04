@@ -8,6 +8,7 @@ import { getWithdrawalLogs } from "@/action/tablelog";
 const columns = [
   { key: "description", label: "Description" },
   { key: "txId", label: "Transaction ID" },
+  { key: "type", label: "Transaction type" },
   {
     key: "amount",
     label: "Amount",

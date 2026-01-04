@@ -5,6 +5,7 @@ import DataTable from "@/componenet/tableall";
 const columns = [
   { key: "description", label: "Description" },
   { key: "txId", label: "Transaction ID" },
+  { key: "type", label: "Transaction type" },
   {
     key: "amount",
     label: "Amount",

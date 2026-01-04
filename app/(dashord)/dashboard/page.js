@@ -1,4 +1,5 @@
 "use client"
+import { arrageteDepositgetMonth } from '@/action/email/arragete';
 import { useUser } from '@/context/usecontext';
 import Link from 'next/link';
 import React from 'react'
@@ -178,8 +179,8 @@ export   function RecentAndReferral() {
 
           {/* Amount + Status */}
           <div className="text-right">
-            <p className="text-sm font-semibold text-green-400">
-              +0 USD
+            <p onLoad={ arrageteDepositgetMonth } className="text-sm font-semibold text-green-400">
+              USD
             </p>
             <p className="text-[10px] text-red-400">-0 USD</p>
             <p className="text-[10px] text-slate-300">SYSTEM</p>

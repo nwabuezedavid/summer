@@ -1,14 +1,15 @@
 "use server";
 
-import prisma from "@/action/db";
+ 
 import { notFound } from "next/navigation";
 import { getSession } from "@/lib/session";
+import prisma from "@/action/db";
 
 export default async function TransactionDetailPage({ params }) {
   const session = await getSession();
   if (!session) notFound();
 
-  const { type, id } = params;
+  const { type, id } = await params;
   const recordId = Number(id);
 
   if (!recordId) notFound();
@@ -17,13 +18,16 @@ export default async function TransactionDetailPage({ params }) {
   let title = "";
 
   /* ---------------- SWITCH BY TYPE ---------------- */
-
+  
+  console.log(type,id);
   switch (type) {
+    
     case "deposit":
       title = "Deposit Details";
       data = await prisma.deposit.findFirst({
         where: { id: recordId, userId: session.id },
       });
+ 
       break;
 
     case "withdrawal":

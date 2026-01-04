@@ -5,7 +5,17 @@ import { getSession } from "@/lib/session";
  
 import { redirect } from "next/navigation";
 import cloudinary from "./cloundinary";
-
+import { sendEmail } from "./mail";
+import { depositEmail } from "./email/deposit";
+import { createNotification } from "./authaction";
+function generateReferralCode(length = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
 export async function submitDeposit(formData) {
   const session = await getSession();
   if (!session) return { error: "Unauthorized" };
@@ -39,13 +49,14 @@ export async function submitDeposit(formData) {
   });
 
   // 🧠 ATOMIC DATABASE WRITE
-  await prisma.$transaction(async (tx) => {
+  const deposi = await prisma.$transaction(async (tx) => {
     // 1️⃣ Save Deposit
-    const deposit = await tx.deposit.create({
+    await  tx.deposit.create({
       data: {
         userId: session.id,
         amount,
         crypto: gateway,
+        txHash: generateReferralCode(),
         proof: uploadResult.secure_url,
         status: "PENDING",
       },
@@ -63,7 +74,26 @@ export async function submitDeposit(formData) {
         gateway,
       },
     });
+   
   });
 
+  
+  await sendEmail({
+    to: session.email ,
+    subject: `${process.env.SITENAME}-Deposit via ${gateway}`,
+    html: depositEmail({
+      username: session?.username,
+      amount: amount,
+       method:gateway,
+    txId:deposi,
+    status:'Pending',
+     
+    }),
+  });
+createNotification({
+  userId: session.id,
+  title: `Deposit via ${gateway}`,
+  message: `  The deposit tansaction is being processed.`,
+})
   redirect("/add-money-log");
 }
