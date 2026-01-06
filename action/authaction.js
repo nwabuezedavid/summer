@@ -25,7 +25,7 @@ export async function resetPassword(formData) {
     data: { password: password },
   });
 }
-
+  
 
 
 
@@ -116,7 +116,7 @@ return { user: {
     mainBalance: Number(user.mainBalance),
     profitBalance: Number(user.profitBalance),
     token:token,
-    balance: user.balance !== undefined ? Number(user.balance) : undefined,
+    balance: user.mainBalance !== undefined ? Number(user.mainBalance) : undefined,
   } };
 
 }
@@ -287,4 +287,26 @@ export async function createNotification({
       message,
     },
   });
+}
+
+
+
+ 
+
+ 
+export const walletAll = async () => {
+
+const walletc = await prisma.wallet.findMany( );
+
+const WALLETS = walletc.reduce((acc, wallet) => {
+  acc[wallet.name] = {
+    label: wallet.name,
+    address: wallet.address,
+    note: `Send only ${wallet.name} to this wallet`,
+  };
+ 
+  
+  return acc;
+}, {});
+  return WALLETS
 }

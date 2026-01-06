@@ -1,4 +1,5 @@
 'use client';
+import { walletAll } from '@/action/authaction';
 import { submitDeposit } from '@/action/deposit';
 import PageHeader from '@/componenet/header';
 import { useState, useEffect } from 'react';
@@ -6,52 +7,66 @@ import { toast } from "sonner";
 
 /* ---------------- WALLET CONFIG ---------------- */
 
-const WALLETS = {
-  BTC: {
-    label: 'Bitcoin',
-    address: 'bc1qkg98rszezw1d4msgxx0wd2alppdjh70h0e6m',
-    note: 'Send only Bitcoin to this wallet',
-  },
-  USDT: {
-    label: 'USDT (TRC20)',
-    address: 'TQx9F1dK9sYzU6Wf9P9N1k1X6F8Z3D',
-    note: 'Send only USDT (TRC20) to this wallet',
-  },
-  ETH: {
-    label: 'Ethereum',
-    address: '0xA3b1c2D4E5F67890123456789ABCDEF12345678',
-    note: 'Send only Ethereum to this wallet',
-  },
-};
+// const WALLETS = {
+//   BTC: {
+//     label: 'Bitcoin',
+//     address: 'bc1qkg98rszezw1d4msgxx0wd2alppdjh70h0e6m',
+//     note: 'Send only Bitcoin to this wallet',
+//   },
+//   USDT: {
+//     label: 'USDT (TRC20)',
+//     address: 'TQx9F1dK9sYzU6Wf9P9N1k1X6F8Z3D',
+//     note: 'Send only USDT (TRC20) to this wallet',
+//   },
+//   ETH: {
+//     label: 'Ethereum',
+//     address: '0xA3b1c2D4E5F67890123456789ABCDEF12345678',
+//     note: 'Send only Ethereum to this wallet',
+//   },
+// };
 
 /* ---------------- MAIN COMPONENT ---------------- */
 
 export default function DepositAmount() {
+
+  
   const [gateway, setGateway] = useState('');
   const [amount, setAmount] = useState('');
   const [file, setFile] = useState(null);
+ const [WALLETS, setallwallet] = useState({})
+ const [loading, setLoading] = useState(true)
+useEffect(() => {
+ walletAll().then(e=>setallwallet(e))
  
-
-  const wallet = WALLETS[gateway];
+ 
+ 
+}, [ ])
+ 
+  const wallet = WALLETS[gateway]  
 
   const handleSubmit = async (e) => {
+    console.log(loading)
+    setLoading(false)
     console.log(gateway , amount ,file);
     if (!gateway || !amount || !file) {
 
       toast.error(
        'Please select a wallet, enter amount and upload payment proof.'
       );
+
       return;
     }
 
    
    e.preventDefault();
-
-  const res = await submitDeposit(new FormData(e.currentTarget));
-
+   const res = await submitDeposit(new FormData(e.currentTarget));
+  
+  // setLoading(false)
   if (res?.error) {
+    setLoading(true)
     toast.error(res.error); // ✅ client-only
   } else {
+    setLoading(true)
     toast.success("deposited successfully");
   }
  
@@ -61,6 +76,8 @@ export default function DepositAmount() {
     <>
   
 <form onSubmit={handleSubmit} className='!h-screen max-sm:mb-[30px]'>
+  {
+  }
       <div className="w-full  overflow-auto bg-[#062f44] text-white rounded-xl border border-white/10 p-6 space-y-6">
         {/* Payment + Amount */}
         <PageHeader
@@ -153,14 +170,15 @@ export default function DepositAmount() {
         <button
           
           type='submit'
-          disabled={!gateway || !amount || !file}
+          disabled={!gateway || !amount || !file & loading}
           className={`px-8 py-3 rounded-full text-xs font-semibold transition ${
             gateway && amount && file
               ? 'bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90'
               : 'bg-slate-600 cursor-not-allowed'
           }`}
         >
-          PROCEED TO PAYMENT →
+          {loading ? 'PROCEED TO PAYMENT →' :'Processing' }
+         
         </button>
       </div>
       </form>

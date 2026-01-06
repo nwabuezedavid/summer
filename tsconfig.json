@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx"
+, "components/admin/admin-layout.jsx", "components/admin/dashboard-overview.jsx", "components/ui/button.tsx", "components/ui/card.jsx", "components/ui/carousel.jsx", "components/admin/modals/walletb.jsx", "app/(admin)/admin/wallet/page.jsx"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

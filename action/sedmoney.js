@@ -4,6 +4,7 @@ import React from 'react'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { createNotification } from './authaction'
+import prisma from './db'
  function generateReferralCode(length = 8) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';

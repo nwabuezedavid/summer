@@ -1,0 +1,93 @@
+"use client"
+ import {getOneuser,getAlluser} from "@/components/admin/action"; 
+
+import { useEffect, useState } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+ 
+
+export default function BonusModal({ bonus, onSave, onClose }) {
+  const [formData, setFormData] = useState ({
+  
+    address: "",
+    name: " ",
+ 
+  })
+ 
+  useEffect(() => {
+    if (bonus) {
+      setFormData(bonus)
+    }
+ 
+
+  }, [bonus])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    onSave(formData)
+  }
+
+  return (
+    <Dialog open onOpenChange={onClose}>
+      <DialogContent className="bg-slate-800 border-slate-700">
+        <DialogHeader>
+          <DialogTitle>{bonus ? "Edit wallet address" : "Add Wallet Address"}</DialogTitle>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="w-full  ">
+            <div>
+              
+              <Label htmlFor="userId">User ID</Label>
+               
+
+              <select className="bg-slate-700 border-slate-600 w-full p-3 mt-4"
+                required name="address" id="address" onChange={(e) => setFormData({ ...formData, name: e.target.value })}>
+                <option value=''> select wallet address</option>
+ 
+                 
+              <option value="Bitcoin">Bitcoin (BTC)</option>
+<option value="Ethereum">Ethereum (ETH)</option>
+<option value="Tether">Tether (USDT)</option>
+<option value="USD Coin">USD Coin (USDC)</option>
+<option value="BNB">BNB (BNB)</option>
+<option value="Cardano">Cardano (ADA)</option>
+<option value="XRP">XRP (XRP)</option>
+<option value="Solana">Solana (SOL)</option>
+<option value="Dogecoin">Dogecoin (DOGE)</option>
+<option value="Polkadot">Polkadot (DOT)</option>
+              </select>
+            </div>
+
+             
+          </div>
+
+          
+
+          <div>
+            <Label htmlFor="note">Wallet Adress</Label>
+            <Textarea
+              id="address"
+              value={formData.address}
+              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              className="bg-slate-700 border-slate-600"
+            />
+          </div>
+
+          <div className="flex gap-2 justify-end pt-4">
+            <Button variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+              {bonus ? "Update" : "Create"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  )
+}
