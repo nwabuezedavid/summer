@@ -43,7 +43,7 @@ const handle = async (e)=>  {
         <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-3">
           <h2 className="text-sm font-semibold">Withdraw Money</h2>
           <Link href={'/withdraw-log'} className="px-4 py-1.5 rounded text-xs font-semibold bg-pink-600 hover:bg-pink-500">
-            WITHDRAW ACCOUNT
+            WITHDRAW LOG
           </Link>
         </div>
 

@@ -7,7 +7,7 @@ import { Plus } from "lucide-react"
  
 import BonusesTable from "@/components/admin/wallettable"
 import BonusModal from "@/components/admin/modals/walletb"
-import { useRouter } from "next/navigation"
+ 
  
   
 
@@ -16,21 +16,10 @@ export default function BonusesPage() {
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [editingBonus, setEditingBonus] = useState (null)
-const router = useRouter()
-  const [authenticated, setAuthenticated] = useState(false)
+ 
+   
 
-  useEffect(() => {
-    const token = localStorage.getItem("adminToken")
-    if (!token) {
-      router.push("/admin/login")
-      return
-    }
-    setAuthenticated(true)
-  }, [router])
-
-  if (!authenticated) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>
-  }
+ 
   useEffect(() => {
     fetchBonuses()
   }, [])

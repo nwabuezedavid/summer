@@ -15,12 +15,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const plans = await prisma.investmentPlan.findMany({
-      include:{
-        
-user :true,
- 
-      }
+    const plans = await prisma.investmentPlan.findMany({ 
     });
     return NextResponse.json(plans);
   } catch (error) {

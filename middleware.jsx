@@ -1,29 +1,55 @@
+// middleware.js
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
-  const token = request.cookies.get('session')?.value;
+  const { pathname } = request.nextUrl;
 
-  // If not authenticated, redirect to login
-  if (!token) {
-    return NextResponse.redirect(
-      new URL('/login', request.url)
-    );
+  const isAdminRoute = pathname.startsWith('/admin');
+
+  // 🛡️ ADMIN AUTH
+  if (isAdminRoute) {
+    const adminToken = request.cookies.get('adminToken')?.value;
+
+    if (!adminToken) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/login';
+      return NextResponse.redirect(url);
+    }
+
+    return NextResponse.next();
   }
 
-  // Allow request to continue
+  // 🔐 USER AUTH
+  const userToken = request.cookies.get('session')?.value;
+
+  if (!userToken) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    return NextResponse.redirect(url);
+  }
+
   return NextResponse.next();
 }
 
-/**
- * Run middleware ONLY on protected routes
- */
 export const config = {
   matcher: [
     '/dashboard/',
     '/dashboard/:path*',
     '/transactions/:path*',
     '/withdraw/:path*',
+    '/transfer/:path*',
     '/send-money/:path*',
     '/support/:path*',
+    '/admin/users/',
+    '/admin/dashboard/',
+    '/admin/users/:path*',
+    '/admin/investment-plans/:path*',
+    '/admin/investments/:path*',
+    '/admin/deposits/:path*',
+    '/admin/withdrawals/:path*',
+    '/admin/transfers/:path*',
+    '/admin/support-tickets/:path*',
+    '/admin/bonuses/:path*',
+    '/admin/wallet/:path*',
   ],
 };

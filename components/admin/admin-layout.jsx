@@ -3,6 +3,7 @@
 
 
 import { useState } from "react"
+import { logoutActionadmin } from "@/action/authaction"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -27,6 +28,7 @@ export default function AdminLayout({ children } ) {
 
   const handleLogout = () => {
     localStorage.removeItem("adminToken")
+    logoutActionadmin()
     router.push("/admin/login") 
   }
 

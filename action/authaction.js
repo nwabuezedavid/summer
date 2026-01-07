@@ -125,6 +125,13 @@ return { user: {
 
  
 
+export async function logoutActionadmin() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("adminToken"); // ✅ remove session cookie
+
+  redirect("/admin/login"); // ✅ force logout redirect
+}
 export async function logoutAction() {
   const cookieStore = await cookies();
 
@@ -304,7 +311,7 @@ const WALLETS = walletc.reduce((acc, wallet) => {
     address: wallet.address,
     note: `Send only ${wallet.name} to this wallet`,
   };
- 
+  console.log(acc);
   
   return acc;
 }, {});
