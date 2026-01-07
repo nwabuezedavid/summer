@@ -7,7 +7,7 @@ interface InvestmentPlan {
   // Add other properties as needed
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number} }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const token = request.headers.get("authorization")?.split(" ")[1];
 
@@ -36,21 +36,19 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
-
-export async function DELETE(request: NextRequest, { params }: { params: { id: number  } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const token = request.headers.get("authorization")?.split(" ")[1];
 
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const { id:numberc } = await params;
-    const id = Number(numberc);
-  
+    const { id } = await params;
+    const idNumber = Number(id);
 
     await prisma.investmentPlan.delete({
       where: {
-        id ,
+        id: idNumber,
       },
     });
 

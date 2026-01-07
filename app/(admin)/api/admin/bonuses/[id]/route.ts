@@ -7,7 +7,7 @@ interface Bonus {
   // Add other properties as needed
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number} }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const token = request.headers.get("authorization")?.split(" ")[1];
 
@@ -15,13 +15,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-      const { id:numberc } = await params;
-    const id = Number(numberc);
+    const { id } = await params;
+    const idNumber = Number(id);
     const data = await request.json();
 
     const updatedBonus = await prisma.Bonus.update({
       where: {
-        id,
+        id: idNumber,
       },
       data,
     });
@@ -29,11 +29,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
     return NextResponse.json(updatedBonus);
   } catch (error) {
     console.error(error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number} }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const token = request.headers.get("authorization")?.split(" ")[1];
 
@@ -41,18 +44,21 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-     const { id:numberc } = await params;
-    const id = Number(numberc);
+    const { id } = await params;
+    const idNumber = Number(id);
 
     await prisma.Bonus.delete({
       where: {
-        id,
+        id: idNumber,
       },
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error(error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

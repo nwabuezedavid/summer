@@ -7,7 +7,7 @@ interface Transfer {
   // Add other properties as needed
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number} }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const token = request.headers.get("authorization")?.split(" ")[1];
 
@@ -56,7 +56,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number} }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const token = request.headers.get("authorization")?.split(" ")[1];
 

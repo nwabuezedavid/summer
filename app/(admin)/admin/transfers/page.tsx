@@ -7,21 +7,22 @@ import { Plus } from "lucide-react"
 import TransfersTable from "@/components/admin/transfers-table"
 import TransferModal from "@/components/admin/modals/transfer-modal"
 
-interface Transfer {
+interface AdminTransfer {
   id: number
   userId: number
   amount: string
   email: string
-  status: string
+  statue : string 
+  status ?: string 
   createdAt: string
   user?: { username: string }
 }
 
 export default function TransfersPage() {
-  const [transfers, setTransfers] = useState<Transfer[]>([])
+  const [transfers, setTransfers] = useState<AdminTransfer[]>([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
-  const [editingTransfer, setEditingTransfer] = useState<Transfer | null>(null)
+  const [editingTransfer, setEditingTransfer] = useState<AdminTransfer | null>(null)
 
   useEffect(() => {
     fetchTransfers()

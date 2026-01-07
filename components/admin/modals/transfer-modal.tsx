@@ -15,7 +15,8 @@ interface Transfer {
   userId: number
   amount: string
   email: string
-  status: string
+  status ?: string
+  statue ?: string
 }
 
 interface Props {

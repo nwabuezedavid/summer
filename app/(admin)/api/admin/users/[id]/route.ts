@@ -15,7 +15,7 @@ function verifyToken(request: NextRequest): boolean {
   return authHeader?.startsWith("Bearer ") || false;
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number} }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     if (!verifyToken(request)) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -48,7 +48,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number} }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     if (!verifyToken(request)) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

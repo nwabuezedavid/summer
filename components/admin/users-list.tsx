@@ -13,7 +13,7 @@ interface User {
   username: string
   mainBalance: number
   profitBalance: number
-  password: number
+  password: string
 }
 
 export default function UsersList() {

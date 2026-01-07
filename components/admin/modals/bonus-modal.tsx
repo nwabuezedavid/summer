@@ -37,7 +37,9 @@ const [singleuser, setsingleuser] = useState()
       setFormData(bonus)
     }
 getAlluser().then(setalluser)
-getOneuser(formData?.userId)().then(setsingleuser)
+if (formData.userId) {
+    getOneuser(formData.userId).then(setsingleuser)
+  }
 console.log(alluser);
 
   }, [bonus])
