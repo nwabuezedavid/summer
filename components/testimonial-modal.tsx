@@ -44,7 +44,7 @@ export default function TestimonialModal() {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed hidden inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-2xl w-[90%] max-w-md p-6 testimonial-modal relative">
         <button onClick={() => setIsOpen(false)} className="absolute top-2 right-2 text-gray-500 hover:text-red-500">
           <X size={24} />
