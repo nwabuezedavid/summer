@@ -71,7 +71,7 @@ export async function submitDeposit(formData) {
   
   await sendEmail({
     to: session.email ,
-    subject: `${process.env.SITENAME}-Deposit via ${gateway}`,
+    subject: `${process.env.NEXT_PUBLIC_SITE_NAME}-Deposit via ${gateway}`,
     html: depositEmail({
       username: session?.username,
       amount: amount,

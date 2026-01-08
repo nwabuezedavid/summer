@@ -11,7 +11,7 @@ const {user,setuser} =useUser()
     <main className='flex flex-col max-sm:hidden w-full h-full '>
 
 
-        <nav className='items-center w-full p-4 border-b-1 border-white/40 flex  text-center justify-center gap-2'><img className='w-10 h-10 rounded-full' src={process.env.SITElogo} alt="" /> <h3 className='text-xl uppercase text-black font-light '>{process.env.SITENAME} </h3> </nav>
+        <nav className='items-center w-full p-4 border-b-1 border-white/40 flex  text-center justify-center gap-2'><img className='w-10 h-10 rounded-full' src={process.env.SITElogo} alt="" /> <h3 className='text-xl uppercase text-black font-light '>{process.env.NEXT_PUBLIC_SITE_NAME} </h3> </nav>
        <div className=' rounded flex flex-col  m-3  bg-gradient-to-r from-pink-700     to-orange-400  min-h-fit'>
 
 <span className='flex  justify-between w-full p-2'>

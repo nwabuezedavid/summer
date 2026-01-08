@@ -34,7 +34,7 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-, "components/admin/admin-layout.jsx", "components/admin/dashboard-overview.jsx", "components/ui/button.tsx", "components/ui/card.jsx", "components/ui/carousel.jsx", "components/admin/modals/walletb.jsx", "app/(admin)/admin/wallet/page.jsx"  ],
+, "components/admin/admin-layout.jsx", "components/admin/dashboard-overview.jsx", "components/ui/button.tsx", "components/ui/card.jsx", "components/ui/carousel.jsx", "components/admin/modals/walletb.jsx", "app/(admin)/admin/wallet/page.jsx", "app/(home)/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

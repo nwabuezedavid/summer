@@ -117,7 +117,7 @@ export async function investAction(formData) {
 })
 const sjdj = await sendEmail({
   to: session.email ,
-  subject: ` ${process.env.SITENAME}your investment ${inves[1].plan.name}`,
+  subject: ` ${process.env.NEXT_PUBLIC_SITE_NAME}your investment ${inves[1].plan.name}`,
   html: investmentEmail({
     username: session?.username,
     amount:  amount,
