@@ -7,19 +7,19 @@ const slides = [
     title: "Welcome to Our Platform",
     subtitle: "Trade Smarter, Not Harder",
     description: "Join the next-generation trading platform designed for both beginners and pros...",
-    video: "https://videocdn.cdnpk.net/videos/d591b66b-f22e-4ffe-a6cc-d01d3bc05832/horizontal/previews/clear/large.mp4?token=exp=1767821487~hmac=1764eae3d4023436ad837abbe8b64f09de7ac98aecf4d6f80d7a483067a05644",
+    video: "./bg3.mp4",
   },
   {
     title: "Learn with Experts",
     subtitle: "Global Access, Local Advantage",
     description: "With multi-currency wallets, market insights in your language...",
-    video: "https://videocdn.cdnpk.net/videos/152e7d14-5f55-4027-9d67-c3db57e3e67c/horizontal/previews/clear/large.mp4?token=exp=1767821732~hmac=3909d797aa070c8c04ac23b02a0fb9761516d6847b0fb9ccad653f5210af3a61",
+    video: "./bg1.mp4",
   },
   {
     title: "Security You Can Trust",
     subtitle: "",
     description: "Our platform uses advanced encryption, biometric login, and cold wallet storage...",
-    video: "https://videocdn.cdnpk.net/videos/fc206a99-545f-59e6-8eea-8494d31da0ee/horizontal/previews/clear/large.mp4?token=exp=1767821802~hmac=f0a58ae0e3c46ebdffaef0d302d9904d3aa4cab9c915b6c926adcc314549436c",
+    video: "./bg2.mp4",
   },
 ]
 

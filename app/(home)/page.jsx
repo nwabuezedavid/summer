@@ -26,9 +26,9 @@ const siteName = process.env.SITE_NAME;
       {/* Image Section */}
       <div className="w-full h-[650px]">
         <img
-          src="https://res.cloudinary.com/devnawgxu/image/upload/fl_preserve_transparency/v1751222827/WhatsApp_Image_2025-06-26_at_12.42.44_975ccc6b_hbjhun.jpg?_s=public-apps"
+          src="./main.js.png"
           alt="Trading platform overview"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
       </div>
 
@@ -58,7 +58,7 @@ const siteName = process.env.SITE_NAME;
       {/* Welcome Section */}
       <section className="w-full flex mt-[4%] max-md:flex-col-reverse text-black min-h-[400px] gap-4">
         <video className="w-1/2 max-md:w-full h-[300px] object-fill p-3" muted playsInline autoPlay loop>
-          <source src="https://res.cloudinary.com/devnawgxu/video/upload/v1749721432/ff_sstutq.mp4" type="video/mp4" />
+          <source src="./bg1.mp4" type="video/mp4" />
         </video>
         <div className="text-black p-4 flex flex-col w-1/2 max-md:w-full justify-center">
           <h1 className="font-bold text-3xl p-2 w-fit rounded-md uppercase">{siteName}</h1>
