@@ -14,7 +14,7 @@ const stats = [
 ]
 
 export default function Home() {
-const siteName = process.env.SITE_NAME;
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
 
   return (
     <main className="w-full">
