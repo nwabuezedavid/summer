@@ -49,6 +49,7 @@ export const config = {
     '/admin/deposits/',
     '/admin/withdrawals/',
     '/admin/kyc/',
+    '/admin/kyc/:path*',
     '/admin/withdrawals/:path*',
     '/admin/transfers/:path*',
     '/admin/support-tickets/:path*',

@@ -7,6 +7,7 @@ import { Plus } from "lucide-react"
  
 import BonusesTable from "@/components/admin/wallettable"
 import BonusModal from "@/components/admin/modals/walletb"
+import AdminLayout from "@/components/admin/admin-layout"
  
  
   
@@ -83,6 +84,8 @@ export default function BonusesPage() {
   }
 
   return (
+
+    <AdminLayout>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -127,5 +130,6 @@ export default function BonusesPage() {
         />
       )}
     </div>
+    </AdminLayout>
   )
 }

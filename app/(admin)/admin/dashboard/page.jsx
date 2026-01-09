@@ -27,8 +27,8 @@ export default function AdminDashboard() {
   }
 
   return (
-   
+   <AdminLayout>
       <DashboardOverview />
-   
+   </AdminLayout>
   )
 }

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import DepositsTable from "@/components/admin/deposits-table"
 import DepositModal from "@/components/admin/modals/deposit-modal"
+import AdminLayout from "@/components/admin/admin-layout"
 
 interface Deposit {
   id: number
@@ -88,6 +89,8 @@ export default function DepositsPage() {
   }
 
   return (
+
+    <AdminLayout>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -132,5 +135,6 @@ export default function DepositsPage() {
         />
       )}
     </div>
+    </AdminLayout>
   )
 }

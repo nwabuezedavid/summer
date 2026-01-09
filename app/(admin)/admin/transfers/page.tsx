@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import TransfersTable from "@/components/admin/transfers-table"
 import TransferModal from "@/components/admin/modals/transfer-modal"
+import AdminLayout from "@/components/admin/admin-layout"
 
 interface AdminTransfer {
   id: number
@@ -87,6 +88,7 @@ export default function TransfersPage() {
   }
 
   return (
+    <AdminLayout>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -131,5 +133,7 @@ export default function TransfersPage() {
         />
       )}
     </div>
+
+    </AdminLayout>
   )
 }

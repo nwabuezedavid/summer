@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import BonusModal from "@/components/admin/modals/bonus-modal"
 import BonusesTable from "@/components/admin/bonuses-table"
+import AdminLayout from "@/components/admin/admin-layout"
  
 interface Bonus {
   id: number
@@ -86,6 +87,7 @@ export default function BonusesPage() {
   }
 
   return (
+       <AdminLayout>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -130,5 +132,6 @@ export default function BonusesPage() {
         />
       )}
     </div>
+    </AdminLayout>
   )
 }

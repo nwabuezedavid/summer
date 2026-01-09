@@ -7,9 +7,9 @@ export default function AdminRootLayout({
 }) {
   return <>
 
-   <AdminLayout>
+
   {children}
-  </AdminLayout>
+ 
   
   </>
 }

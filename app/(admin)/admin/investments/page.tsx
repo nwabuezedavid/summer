@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import InvestmentsTable from "@/components/admin/investments-table"
 import InvestmentModal from "@/components/admin/modals/investment-modal"
+import AdminLayout from "@/components/admin/admin-layout"
 
 interface Investment {
   id: number
@@ -89,6 +90,8 @@ export default function InvestmentsPage() {
   }
 
   return (
+
+    <AdminLayout>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -133,5 +136,6 @@ export default function InvestmentsPage() {
         />
       )}
     </div>
+    </AdminLayout>
   )
 }

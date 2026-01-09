@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import TicketsTable from "@/components/admin/tickets-table"
 import TicketModal from "@/components/admin/modals/ticket-modal"
+import AdminLayout from "@/components/admin/admin-layout"
 
 interface SupportTicket {
   id: number
@@ -87,6 +88,8 @@ export default function SupportTicketsPage() {
   }
 
   return (
+   <AdminLayout>
+
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -131,5 +134,6 @@ export default function SupportTicketsPage() {
         />
       )}
     </div>
+    </AdminLayout>
   )
 }

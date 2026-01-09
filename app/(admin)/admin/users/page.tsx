@@ -23,8 +23,9 @@ export default function UsersPage() {
   }
 
   return (
-     
+     <AdminLayout>
       <UsersList />
+      </AdminLayout>
  
   )
 }

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import WithdrawalsTable from "@/components/admin/withdrawals-table"
 import WithdrawalModal from "@/components/admin/modals/withdrawal-modal"
+import AdminLayout from "@/components/admin/admin-layout"
 
 interface Withdrawal {
   id: number
@@ -87,6 +88,8 @@ export default function WithdrawalsPage() {
   }
 
   return (
+
+       <AdminLayout>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
@@ -130,6 +133,6 @@ export default function WithdrawalsPage() {
           }}
         />
       )}
-    </div>
+    </div></AdminLayout>
   )
 }

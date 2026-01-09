@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { getKycSubmissions, approveKyc, rejectKyc } from "@/action/kyc"
+import AdminLayout from "@/components/admin/admin-layout"
 
 export default function AdminKYCPage() {
   const [submissions, setSubmissions] = useState([])
@@ -57,6 +58,8 @@ export default function AdminKYCPage() {
   }
 
   return (
+
+    <AdminLayout>
     <div className="p-6  min-h-screen">
       {/* Header */}
       <div className="mb-8">
@@ -180,7 +183,7 @@ export default function AdminKYCPage() {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">Document</h3>
                   <div className="bg-gray-100 p-4 rounded-lg text-center">
-                    <p className="text-gray-600">📄 {selectedUser.kycDocument}</p>
+                    <a href={selectedUser.kycDocument} className="text-gray-600">📄 {selectedUser.kycDocument}</a>
                   </div>
                 </div>
               )}
@@ -238,5 +241,7 @@ export default function AdminKYCPage() {
         </div>
       )}
     </div>
+
+    </AdminLayout>
   )
 }
