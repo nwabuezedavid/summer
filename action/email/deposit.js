@@ -10,7 +10,7 @@ export function depositEmail({ username, amount, method, status, txId }) {
       <table style="width:100%;font-size:14px;margin-top:16px;">
         <tr><td>Amount:</td><td><strong>${amount} USD</strong></td></tr>
         <tr><td>Method:</td><td>${method}</td></tr>
-        <tr><td>Transaction ID:</td><td>${txId}</td></tr>
+        <tr><td>Transaction ID:</td><td>${txId || 'TX93829'}</td></tr>
         <tr><td>Status:</td><td><strong>${status}</strong></td></tr>
       </table>
 
