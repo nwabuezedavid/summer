@@ -82,7 +82,7 @@ export async function submitDeposit(formData) {
     to: session.email ,
     subject: `${process.env.NEXT_PUBLIC_SITE_NAME}-Deposit via ${gateway}`,
     html: depositEmail({
-      username: session?.username,
+      username: session.username || 'user',
       amount: amount,
        method:gateway,
     txId:deposi,
