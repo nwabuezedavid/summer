@@ -64,6 +64,7 @@ export async function loginAuth(formData) {
     uuid: true,
     username: true,
     email: true,
+    kycDocument: true,
     avatar: true,
     fullName: true,
     phone: true,

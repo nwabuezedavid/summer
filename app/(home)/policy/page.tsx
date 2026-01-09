@@ -154,13 +154,13 @@ export default function Policy() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold mb-3 text-gray-900">General Inquiries</h3>
-                <p className="text-gray-600 text-sm mb-2">Email: support@victoryarchiverstrade.com</p>
+                <p className="text-gray-600 text-sm mb-2">Email: support@{process.env.NEXT_PUBLIC_SITE_NAME}.com</p>
                 <p className="text-gray-600 text-sm mb-2">Phone: +1 (555) 123-4567</p>
                 <p className="text-gray-600 text-sm">Hours: 24/7 Support Available</p>
               </div>
               <div>
                 <h3 className="font-semibold mb-3 text-gray-900">Data Protection Officer</h3>
-                <p className="text-gray-600 text-sm mb-2">Email: privacy@victoryarchiverstrade.com</p>
+                <p className="text-gray-600 text-sm mb-2">Email: privacy@{process.env.NEXT_PUBLIC_SITE_NAME}.com</p>
                 <p className="text-gray-600 text-sm mb-2">Address: 123 Trading Street, New York, NY 10004</p>
               </div>
             </div>

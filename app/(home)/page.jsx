@@ -22,7 +22,7 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
 
       {/* Video Slider Hero */}
       <VideoSlider />
-
+ 
       {/* Image Section */}
       <div className="w-full h-[650px]">
         <img

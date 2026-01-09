@@ -31,6 +31,8 @@ export default function AdminLoginPage() {
       if (!res.ok) throw new Error(data.message)
         
       localStorage.setItem("adminToken", data.token)
+      
+      location.href = "/admin/dashboard"
       router.push("/admin/dashboard")
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed")

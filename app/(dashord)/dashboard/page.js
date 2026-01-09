@@ -59,9 +59,9 @@ export   function WalletCard() {
       {/* KYC Notice */}
       <div className="text-xs text-slate-300">
         🔒 Verify KYC for $500+ withdrawals{' '}
-        <span className="text-pink-500 cursor-pointer font-medium">
+        <Link href={`/kyc/`} className="text-pink-500 cursor-pointer font-medium">
           Submit Now
-        </span>
+        </Link>
       </div>
 
       {/* User Header */}

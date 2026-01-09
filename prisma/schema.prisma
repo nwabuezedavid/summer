@@ -40,7 +40,11 @@ model User {
   isVerified    Boolean  @default(false) // KYC
   rank          UserRank @default(LEVEL_1)
   UserType          Usertype @default(USER)
-
+ // 🔐 KYC
+  kycDocument   String?
+  kycStatus     KycStatus @default(PENDING)
+  kycReviewedAt DateTime?
+  kycNote       String?
   mainBalance   Decimal  @default(0)
   profitBalance Decimal  @default(0)
 
@@ -62,7 +66,11 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
-
+enum KycStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
 //////////////////////
 // INVESTMENT PLANS
 //////////////////////

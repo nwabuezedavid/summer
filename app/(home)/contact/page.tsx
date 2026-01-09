@@ -123,7 +123,7 @@ export default function Contact() {
               <h3 className="font-semibold mb-3 text-gray-900">General Inquiries</h3>
               <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
                 <Mail size={16} />
-                <span>support@victoryarchiverstrade.com</span>
+                <span>support@{process.env.NEXT_PUBLIC_SITE_NAME}.com</span>
               </div>
               <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
                 <Phone size={16} />
@@ -135,7 +135,7 @@ export default function Contact() {
               <h3 className="font-semibold mb-3 text-gray-900">Data Protection Officer</h3>
               <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
                 <Mail size={16} />
-                <span>privacy@victoryarchiverstrade.com</span>
+                <span>privacy@{process.env.NEXT_PUBLIC_SITE_NAME}.com</span>
               </div>
               <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
                 <MapPin size={16} />
