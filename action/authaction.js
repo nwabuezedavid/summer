@@ -266,7 +266,7 @@ const transporter = nodemailer.createTransport({
       You recently requested a password reset for your account. No worries, we've got you covered!
     </p>
     <a
-      href={resetUrl}
+      href=${resetUrl}
       target="_blank"
       className="inline-block px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg hover:bg-blue-700 transition-colors"
     >
