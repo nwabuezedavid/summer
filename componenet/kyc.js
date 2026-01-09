@@ -1,12 +1,23 @@
 'use client';
 import { matureInvestments } from '@/action/matureInvestments';
+import { useUser } from '@/context/usecontext';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function KYCNotice({ show = true }) {
   const [visible, setVisible] = useState(show);
+  const data = useUser()
+
 useEffect(() => {
+ 
   matureInvestments()
+  if (data.user.kycStatus == "APPREOVED") {
+   console.log('kskdkdj');
+    setVisible(false)
+  
+   }
 }, [ ])
+
   if (!visible) return null;
 
   return (
@@ -24,9 +35,9 @@ useEffect(() => {
 
       {/* Actions */}
       <div className="flex gap-2">
-        <button className="px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition">
+        <Link href={`/kyc/`} className="px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-pink-600 to-orange-500 hover:opacity-90 transition">
           SUBMIT NOW
-        </button>
+        </Link>
         <button
           onClick={() => setVisible(false)}
           className="px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-700 hover:bg-slate-600 transition"

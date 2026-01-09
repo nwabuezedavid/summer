@@ -3,7 +3,7 @@
 import prisma from "@/action/db";
 import { updateProfile } from "@/action/profile";
 import { getSession } from "@/lib/session";
- 
+ import  SubmitButton  from "@/action/btnwe"
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -53,20 +53,15 @@ export default async function Page() {
 
         {/* Form */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input label="Full Name" name="fullName" defaultValue={user.fullName ?? ""} />
-          <Input label="Username" name="username" defaultValue={user.username} />
-          <Input label="Email" name="email" defaultValue={user.email} />
-          <Input label="Phone" name="phone" defaultValue={user.phone ?? ""} />
-          <Input label="Country" name="country" defaultValue={user.country ?? ""} />
-          <Input label="Address" name="address" defaultValue={user.address ?? ""} />
+          <Input label="Full Name"  name="fullName" defaultValue={user.fullName ?? ""} />
+          <Input label="Username"  name="username" defaultValue={user.username} />
+          <Input label="Email"  name="email" defaultValue={user.email} />
+          <Input label="Phone"  name="phone" defaultValue={user.phone ?? ""} />
+          <Input label="Country"  name="country" defaultValue={user.country ?? ""} />
+          <Input label="Address"  name="address" defaultValue={user.address ?? ""} />
         </div>
 
-        <button
-          type="submit"
-          className="px-6 py-2 rounded-full bg-pink-600 hover:bg-pink-500 text-xs font-semibold transition"
-        >
-          SAVE CHANGES
-        </button>
+       <SubmitButton />
       </form>
     </div>
   );

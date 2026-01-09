@@ -23,7 +23,6 @@ const handleChange = (e) => {
 const handelesubmit = (e)=>{
   e.preventDefault();
   setloadng(true)
-
  resetPassa(user)
  .then(e =>{
   if (e.error){

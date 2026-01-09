@@ -3,21 +3,23 @@
 import { useState, useEffect } from "react"
 import { uploadKycDocument, getKycStatus } from "@/action/kyc"
 import { getSession } from "@/lib/session";
+import { useUser } from "@/context/usecontext";
 export default function KYCPage() {
   const [userx, setUserx] = useState(null)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const [kycStatus, setKycStatus] = useState(null)
   const [file, setFile] = useState(null)
-  useEffect( async () => {
-        getSession()
-        .then(e=>setUserx(e))
+  const data = useUser()
+  useEffect(   () => {
+         setUserx(data.user)
     // Get user from localStorage
+    console.log(userx);
     
      
       
   }, [])
-if (userx?.kycDocument){
+if (userx?.kycDocument != null){
     return (
         <div className="p-5 justify-center  self-center text-center border border-gray-200 rounded-lg shadow-md">
     <h3 className="text-lg font-bold">
