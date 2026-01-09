@@ -52,14 +52,13 @@ useEffect(() => {
      e.preventDefault();
 
   if (!gateway || !amount || !file) {
-    setLoading(true);
     toast.error(
       "Please select a wallet, enter amount and upload payment proof."
     );
     return;
   }
 
-  
+  setLoading(true);
 
   try {
     const res = await submitDeposit(
@@ -68,17 +67,17 @@ useEffect(() => {
 
     if (res?.error) {
       toast.error(res.error);
-      setLoading(true);
     } else {
       toast.success("Deposited successfully");
       setFile(null);
       e.currentTarget.reset();
-      setLoading(true);
     }
+  } catch (err) {
+    console.log(err);
+    
   }  
-  }
  
-  };
+  }
 
   return (
     <>
