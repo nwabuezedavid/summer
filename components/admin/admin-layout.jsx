@@ -13,6 +13,7 @@ const menuItems = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Users", href: "/admin/users" },
   { label: "wallet", href: "/admin/wallet" },
+  { label: "kyc", href: "/admin/kyc" },
   { label: "Investment Plans", href: "/admin/investment-plans" },
   { label: "Investments", href: "/admin/investments" },
   { label: "Deposits", href: "/admin/deposits" },
