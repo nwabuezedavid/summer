@@ -24,7 +24,7 @@ const menuItems = [
 
 export default function AdminLayout({ children } ) {
   const router = useRouter()
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleLogout = () => {
     localStorage.removeItem("adminToken")
