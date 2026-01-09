@@ -50,7 +50,7 @@ export default function BonusModal({ bonus, onSave, onClose }) {
                 <option value=''> select wallet address</option>
  
                  
-              <option value="Bitcoin">Bitcoin (BTC)</option>
+              <option value="BTC">Bitcoin (BTC)</option>
 <option value="ETH">Ethereum (ETH)</option>
 <option value="USDT">Tether (USDT)</option>
 <option value="USD">USD Coin (USDC)</option>
