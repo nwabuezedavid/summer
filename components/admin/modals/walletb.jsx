@@ -51,15 +51,16 @@ export default function BonusModal({ bonus, onSave, onClose }) {
  
                  
               <option value="Bitcoin">Bitcoin (BTC)</option>
-<option value="Ethereum">Ethereum (ETH)</option>
-<option value="Tether">Tether (USDT)</option>
-<option value="USD Coin">USD Coin (USDC)</option>
+<option value="ETH">Ethereum (ETH)</option>
+<option value="USDT">Tether (USDT)</option>
+<option value="USD">USD Coin (USDC)</option>
 <option value="BNB">BNB (BNB)</option>
-<option value="Cardano">Cardano (ADA)</option>
+<option value="ADA">Cardano (ADA)</option>
 <option value="XRP">XRP (XRP)</option>
-<option value="Solana">Solana (SOL)</option>
-<option value="Dogecoin">Dogecoin (DOGE)</option>
-<option value="Polkadot">Polkadot (DOT)</option>
+<option value="SOL">Solana (SOL)</option>
+<option value="DOGE">Dogecoin (DOGE)</option>
+<option value="DOT">Polkadot (DOT)</option>
+<option value="TRON">TRON</option>
               </select>
             </div>
 

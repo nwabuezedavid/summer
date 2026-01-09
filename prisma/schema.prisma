@@ -264,6 +264,9 @@ enum CryptoType {
   USDT
   BNB
   TRX
+  DOGE
+  SOL
+  ADA
 }
 
  

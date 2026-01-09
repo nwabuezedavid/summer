@@ -4,28 +4,7 @@ import { submitDeposit } from '@/action/deposit';
 import PageHeader from '@/componenet/header';
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
-
-/* ---------------- WALLET CONFIG ---------------- */
-
-// const WALLETS = {
-//   BTC: {
-//     label: 'Bitcoin',
-//     address: 'bc1qkg98rszezw1d4msgxx0wd2alppdjh70h0e6m',
-//     note: 'Send only Bitcoin to this wallet',
-//   },
-//   USDT: {
-//     label: 'USDT (TRC20)',
-//     address: 'TQx9F1dK9sYzU6Wf9P9N1k1X6F8Z3D',
-//     note: 'Send only USDT (TRC20) to this wallet',
-//   },
-//   ETH: {
-//     label: 'Ethereum',
-//     address: '0xA3b1c2D4E5F67890123456789ABCDEF12345678',
-//     note: 'Send only Ethereum to this wallet',
-//   },
-// };
-
-/* ---------------- MAIN COMPONENT ---------------- */
+ 
 
 export default function DepositAmount() {
 
@@ -41,33 +20,62 @@ useEffect(() => {
  
  
 }, [ ])
- 
+ const handleFileChange = (e) => {
+  const selectedFile = e.target.files?.[0];
+  if (!selectedFile) return;
+
+  const allowedTypes = ["image/png", "image/jpeg"];
+  const maxSize = 1 * 1024 * 1024; // 1MB
+
+  // ❌ Type validation
+  if (!allowedTypes.includes(selectedFile.type)) {
+    toast.error("Only PNG and JPG images are allowed");
+    e.target.value = "";
+    setFile(null);
+    return;
+  }
+
+  // ❌ Size validation
+  if (selectedFile.size > maxSize) {
+    toast.error("Image must be less than 1MB");
+    e.target.value = "";
+    setFile(null);
+    return;
+  }
+
+  // ✅ Valid file
+  setFile(selectedFile);
+};
   const wallet = WALLETS[gateway]  
 
   const handleSubmit = async (e) => {
-    console.log(loading)
-    setLoading(false)
-    console.log(gateway , amount ,file);
-    if (!gateway || !amount || !file) {
+     e.preventDefault();
 
-      toast.error(
-       'Please select a wallet, enter amount and upload payment proof.'
-      );
+  if (!gateway || !amount || !file) {
+    toast.error(
+      "Please select a wallet, enter amount and upload payment proof."
+    );
+    return;
+  }
 
-      return;
+  setLoading(true);
+
+  try {
+    const res = await submitDeposit(
+      new FormData(e.currentTarget)
+    );
+
+    if (res?.error) {
+      toast.error(res.error);
+    } else {
+      toast.success("Deposited successfully");
+      setFile(null);
+      e.currentTarget.reset();
     }
-
-   
-   e.preventDefault();
-   const res = await submitDeposit(new FormData(e.currentTarget));
-  
-  // setLoading(false)
-  if (res?.error) {
-    setLoading(true)
-    toast.error(res.error); // ✅ client-only
-  } else {
-    setLoading(true)
-    toast.success("deposited successfully");
+  } catch (err) {
+    toast.error("Something went wrong");
+  } finally {
+    setLoading(false);
   }
  
   };
@@ -145,7 +153,7 @@ useEffect(() => {
                   type="file"
                   accept="image/*"
                   name='file'
-                  onChange={(e) => setFile(e.target.files?.[0])}
+                  onChange={handleFileChange}
                   className="absolute inset-0 opacity-0 cursor-pointer"
                 />
 
