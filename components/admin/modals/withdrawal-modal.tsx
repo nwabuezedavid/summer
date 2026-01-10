@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+ import  SubmitButton  from "@/action/btnwe"
 import { useEffect, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
@@ -133,9 +133,9 @@ const [allusers, setallusers] = useState([])
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-              {withdrawal ? "Update" : "Create"}
-            </Button>
+             
+            
+             <SubmitButton />
           </div>
         </form>
       </DialogContent>

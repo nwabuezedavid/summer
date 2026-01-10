@@ -31,6 +31,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     },
   });
 }
+
+delete data.user;
     const updatedDeposit = await prisma.Deposit.update({
       where: {
         id,

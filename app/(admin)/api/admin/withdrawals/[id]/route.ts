@@ -18,12 +18,12 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
      const { id:numberc } = await params;
     const id = Number(numberc);
     const data = await request.json();
-
+    delete data.user;
     const updatedWithdrawal = await prisma.withdrawal.update({
       where: {
-        id,
+        id:id,
       },
-      data,
+      data:data,
     });
 
     if (!updatedWithdrawal) {
