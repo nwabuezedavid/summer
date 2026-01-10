@@ -1,8 +1,9 @@
 "use client"
-import { arrageteDepositgetMonth } from '@/action/email/arragete';
+ 
+import { getDashboardStats, getDashboardStatsmodbilescreen } from '@/action/email/arragete';
 import { useUser } from '@/context/usecontext';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
  export function humanizeCurrency(value, currency = "USD") {
   if (value === null || value === undefined) return `0 ${currency}`;
@@ -31,10 +32,27 @@ export function humanizeStrict(value) {
   });
 }
 const page = () => {
+const [statss, xsdfdd] = useState(null)
+const [loading, setLoading] = useState(null)
+  useEffect(() => {
+    getDashboardStats()
+      .then(xsdfdd)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+      console.log(statss);
+      
+  }, []);
 
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  }
   return (
     <div className='w-full h-[100%] max-sm:pb-[28%] py-10 overflow-auto items-center flex flex-col'>
-      <Dashboard/>
+      {statss && <Dashboard statss={statss}/>}
+      {console.log(statss)}
+      
       <WalletCard/>
       
     </div>
@@ -60,7 +78,7 @@ export   function WalletCard() {
       <div className="text-xs text-slate-300">
         🔒 Verify KYC for $500+ withdrawals{' '}
         <Link href={`/kyc/`} className="text-pink-500 cursor-pointer font-medium">
-          Submit Now
+          
         </Link>
       </div>
 
@@ -179,7 +197,7 @@ export   function RecentAndReferral() {
 
           {/* Amount + Status */}
           <div className="text-right">
-            <p onLoad={ arrageteDepositgetMonth } className="text-sm font-semibold text-green-400">
+            <p  className="text-sm font-semibold text-green-400">
               USD
             </p>
             <p className="text-[10px] text-red-400">-0 USD</p>
@@ -228,53 +246,110 @@ export   function RecentAndReferral() {
 
 export   function AllStatistic() {
   const {user,setuser} = useUser()
-const totalDeposit = user?.deposits?.reduce(
-  (sum, d) => sum + Number(d.amount || 0),
-  0
-) || 0;
+ 
 
-const totalInvestment = user?.investments?.reduce(
-  (sum, i) => sum + Number(i.amount || 0),
-  0
-) || 0;
+ const [loading, setLoading] = useState(true);
+  const [statss, setStats] = useState({});
 
-const totalWithdraw = user?.withdrawals?.reduce(
-  (sum, w) => sum + Number(w.amount || 0),
-  0
-) || 0;
+  useEffect(() => {
+    getDashboardStatsmodbilescreen()
+      .then(setStats)
+      .catch(console.error)
+      .finally(() => setLoading(false))
+  }, [])
 
-const totalTransfer = user?.transfers?.reduce(
-  (sum, t) => sum + Number(t.amount || 0),
-  0
-) || 0;
+ 
 
-const referralBonus = user?.bonuses?.filter(b => b.type === "REFERRAL")
-  .reduce((sum, b) => sum + Number(b.amount || 0), 0) || 0;
-
-const depositBonus = user?.bonuses?.filter(b => b.type === "DEPOSIT")
-  .reduce((sum, b) => sum + Number(b.amount || 0), 0) || 0;
-
-const investmentBonus = user?.bonuses?.filter(b => b.type === "INVESTMENT")
-  .reduce((sum, b) => sum + Number(b.amount || 0), 0) || 0;
   const stats = [
-  { label: 'All Transactions', value: user.transactions?.amount.sum || '0', icon: 'fa-arrow-right-arrow-left', bg: 'bg-lime-300' },
-  { label: 'Total Deposit', value: totalDeposit  , icon: 'fa-download', bg: 'bg-yellow-400' },
-  { label: 'Total Investment', value: '$0', icon: 'fa-cube', bg: 'bg-purple-200' },
-  { label: 'Total Profit', value: '$0', icon: 'fa-wallet', bg: 'bg-orange-300' },
-  { label: 'Total Transfer', value: '$0', icon: 'fa-right-left', bg: 'bg-pink-300' },
-  { label: 'Total Withdraw', value: '$0', icon: 'fa-paper-plane', bg: 'bg-lime-200' },
-  { label: 'Referral Bonus', value: '$0', icon: 'fa-gift', bg: 'bg-lime-400' },
-  { label: 'Deposit Bonus', value: '$0', icon: 'fa-gift', bg: 'bg-pink-400' },
-  { label: 'Investment Bonus', value: '$0', icon: 'fa-gift', bg: 'bg-lime-200' },
-  { label: 'Total Referral', value: 1, icon: 'fa-users', bg: 'bg-cyan-200' },
-  { label: 'Rank Achieved', value: 1, icon: 'fa-trophy', bg: 'bg-white' },
-  { label: 'Total Ticket', value: 0, icon: 'fa-triangle-exclamation', bg: 'bg-teal-400' },
+  {
+    label: 'All Transactions',
+    value: statss?.allTransactions ?? 0,
+    icon: 'fa-arrow-right-arrow-left',
+    bg: 'bg-lime-300',
+  },
+  {
+    label: 'Total Deposit',
+    value: `$${statss?.totalDeposit ?? 0}`,
+    icon: 'fa-download',
+    bg: 'bg-yellow-400',
+  },
+  {
+    label: 'Total Investment',
+    value: `$${statss?.totalInvestment ?? 0}`,
+    icon: 'fa-cube',
+    bg: 'bg-purple-200',
+  },
+  {
+    label: 'Total Profit',
+    value: `$${statss?.totalProfit ?? 0}`,
+    icon: 'fa-wallet',
+    bg: 'bg-orange-300',
+  },
+  {
+    label: 'Total Transfer',
+    value: `$${statss?.totalTransfer ?? 0}`,
+    icon: 'fa-right-left',
+    bg: 'bg-pink-300',
+  },
+  {
+    label: 'Total Withdraw',
+    value: `$${statss?.totalWithdraw ?? 0}`,
+    icon: 'fa-paper-plane',
+    bg: 'bg-lime-200',
+  },
+  {
+    label: 'Referral Bonus',
+    value: `$${statss?.referralBonus ?? 0}`,
+    icon: 'fa-gift',
+    bg: 'bg-lime-400',
+  },
+  {
+    label: 'Deposit Bonus',
+    value: `$${statss?.depositBonus ?? 0}`,
+    icon: 'fa-gift',
+    bg: 'bg-pink-400',
+  },
+  {
+    label: 'Investment Bonus',
+    value: `$${statss?.investmentBonus ?? 0}`,
+    icon: 'fa-gift',
+    bg: 'bg-lime-200',
+  },
+  {
+    label: 'Total Referral',
+    value: statss?.totalReferral ?? 0,
+    icon: 'fa-users',
+    bg: 'bg-cyan-200',
+  },
+  {
+    label: 'Rank Achieved',
+    value: user?.rank ?? 'LEVEL 1',
+    icon: 'fa-trophy',
+    bg: 'bg-white',
+  },
+  {
+    label: 'Total Ticket',
+    value: statss?.totalTicket ?? 0,
+    icon: 'fa-triangle-exclamation',
+    bg: 'bg-teal-400',
+  },
 ];
+
   const [expanded, setExpanded] = useState(false);
 
   // show first 8 by default (matches screenshot)
   const visibleStats = expanded ? stats : stats.slice(0, 8);
-
+ if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen ">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="w-full max-w-sm bg-[#0b3550] rounded-xl p-4 text-white border border-white/10">
       {/* Header */}
@@ -392,24 +467,25 @@ export   function AllNavigations() {
 
 
 
-export   function Dashboard() {
+export   function Dashboard({statss}) {
   const{user,setuser} = useUser()
+console.log(statss);
+
+  
   const referralUrl =
-    `${process.env.NEXT_PUBLIC_BASE_URL}/register/user/${user?.referralCode}`;
+    `${process.env.NEXT_PUBLIC_BASE_URL}/register/${user?.referralCode}`;
 
   const stats = [
-  { label: "All Transactions", amount: `${user.transactions?.length || 0}` },
-  { label: "Total Deposit", amount: `${user.deposits?.length || "0"}` },
-  { label: "Total Investment", amount: user.profitBalance || "0" },
-  { label: "Total Profit", amount: user.investments?.length || "0" },
-  { label: "Total Transfer", amount: `${user.transfers?.length || "0"}` },
-  { label: "Total Withdraw", amount: `${user.withdrawals?.length || "0"}` },
-  { label: "Referral Bonus", amount:  user.Bonus?.length || "0" },
-  { label: "Deposit Bonus", amount: `${user.Bonus?.length || "0"}` },
-  { label: "Investment Bonus", amount: `${user.Bonus?.length || "0"}` },
-  { label: "Total Referral", amount: user?.referrals?.length || "0" },
-  { label: "Rank Achieved", amount: user?.rank || "0" },
-  { label: "Total Ticket", amount: user.tickets?.length || "0" },
+  { label: "All Transactions", value: statss.allTransactions },
+  { label: "Total Deposit", value: `$${statss.totalDeposit}` },
+  { label: "Total Investment", value: `$${statss.totalInvestment}` },
+  { label: "Total Profit", value: `$${statss.totalProfit}` },
+  { label: "Total Transfer", value: `$${statss.totalTransfer}` },
+  { label: "Total Withdraw", value: `$${statss.totalWithdraw}` },
+  { label: "Referral Bonus", value: `$${statss.referralBonus}` },
+  { label: "Deposit Bonus", value: `$${statss.depositBonus}` },
+  { label: "Investment Bonus", value: `$${statss.investmentBonus}` },
+  { label: "Total Referral", value: statss.totalReferral },
 ];
 
   return (
@@ -447,7 +523,9 @@ export   function Dashboard() {
           </div>
 
           <p className="text-xs text-slate-400 mt-2">
-            {user.referrals?.length  || 0} people are joined by using this URL
+            {console.log(stats[9].value)
+            }
+            {stats[9].value || 0} people are joined by using this URL
           </p>
         </div>
       </div>
@@ -461,7 +539,7 @@ export   function Dashboard() {
           >
             <span className="absolute top-0 right-0 w-6 h-6 bg-yellow-700/40 rounded-bl-lg" />
 
-            <p className="text-xl font-semibold">${title.amount || 0}</p>
+            <p className="text-xl font-semibold">{title.value || 0}</p>
             <p className="text-xs text-indigo-100 mt-1">{title.label  }</p>
           </div>
         ))}

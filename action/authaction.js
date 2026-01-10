@@ -92,12 +92,15 @@ if (!user) {
  
   return { error: "Invalid credentials" }
 }else{
+     delete user.investments
+     delete user.deposits
   const plainUser = {
     ...user,
     balance: user.balance ? Number(user.balance) : 0,
     createdAt: user.createdAt ? user.createdAt.toISOString() : null,
   };
 
+console.log(plainUser);
 
  const token = createToken(plainUser);
   
@@ -337,7 +340,7 @@ const WALLETS = walletc.reduce((acc, wallet) => {
     address: wallet.address,
     note: `Send only ${wallet.name} to this wallet`,
   };
-  console.log(acc);
+ 
   
   return acc;
 }, {});
