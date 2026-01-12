@@ -18,6 +18,9 @@ export async function withdrawAction(formData) {
   if (!method || !amount || amount <= 0) {
     return { error: "Invalid withdrawal data" };
   }
+  console.log(session);
+  
+  
 
   // 🔍 Get user balances
   const user = await prisma.user.findUnique({
@@ -25,9 +28,12 @@ export async function withdrawAction(formData) {
     select: {
       mainBalance: true,
       profitBalance: true,
+      kycStatus: true,
     },
   });
-
+if (amount >= 499 && user.kycStatus === 'PENDING'  ) {
+    return { error: "we havent verified your kyc" };
+  }
   const balance =
     wallet === "MAIN"
       ? Number(user.mainBalance)
@@ -72,17 +78,17 @@ export async function withdrawAction(formData) {
           : { profitBalance: { decrement: amount } },
     }),
   ]);
-await sendEmail({
-  to: session.email,
-  subject: "Withdrawal Request Update",
-  html: withdrawalEmail({
-    username: user.username,
-    amount: amount,
-    method: method,
-    status: "Pending",
-    txId: "TX-239203",
-  }),
-});
+// await sendEmail({
+//   to: session.email,
+//   subject: "Withdrawal Request Update",
+//   html: withdrawalEmail({
+//     username: user.username,
+//     amount: amount,
+//     method: method,
+//     status: "Pending",
+//     txId: "TX-239203",
+//   }),
+// });
   redirect("/withdraw-log");
 }
 

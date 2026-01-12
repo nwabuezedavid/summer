@@ -40,7 +40,7 @@ id:Number(userId)
     },
     data:{
        profitBalance: {
-        increment: profit + amount, // Replace amount with the actual amount
+        increment: Number(profit) + Number(amount), // Replace amount with the actual amount
       },
     }
   })
