@@ -503,9 +503,11 @@ console.log(statss);
             </span>
           </div>
         </div>
+          
 
         {/* Referral URL */}
         <div className="lg:col-span-2 bg-[#083b52] rounded-lg p-4 border border-white/10">
+        <h3>USERNAME : <b>{user.username}</b></h3>
           <p className="text-sm text-slate-300 mb-2">Referral URL</p>
 
           <div className="flex items-center gap-2">
