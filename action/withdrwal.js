@@ -78,17 +78,17 @@ if (amount >= 499 && user.kycStatus === 'PENDING'  ) {
           : { profitBalance: { decrement: amount } },
     }),
   ]);
-// await sendEmail({
-//   to: session.email,
-//   subject: "Withdrawal Request Update",
-//   html: withdrawalEmail({
-//     username: user.username,
-//     amount: amount,
-//     method: method,
-//     status: "Pending",
-//     txId: "TX-239203",
-//   }),
-// });
+await sendEmail({
+  to: session.email,
+  subject: "Withdrawal Request Update",
+  html: withdrawalEmail({
+    username: user.username,
+    amount: amount,
+    method: method,
+    status: "Pending",
+    txId: "TX-239203",
+  }),
+});
   redirect("/withdraw-log");
 }
 
