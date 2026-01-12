@@ -32,7 +32,7 @@ export async function withdrawAction(formData) {
     },
   });
 if (amount >= 499 && user.kycStatus === 'PENDING'  ) {
-    return { error: "we havent verified your kyc" };
+    return { error: "We haven't verified your KYC. You can't withdraw more than 500" };
   }
   const balance =
     wallet === "MAIN"
