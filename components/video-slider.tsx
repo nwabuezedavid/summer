@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 const slides = [
   {
-    title: "Welcome to Our Platform",
+    title: `Welcome to Our  ${process.env.NEXT_PUBLIC_SITE_NAME} formally known as solid rock investment`,
     subtitle: "Trade Smarter, Not Harder",
     description: "Join the next-generation trading platform designed for both beginners and pros...",
     video: "./bg3.mp4",

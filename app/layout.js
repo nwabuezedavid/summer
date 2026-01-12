@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Commonwealth Asset Trust Investment company.",
-  description: "Commonwealth Asset Trust Investment company, formally known as solid rock investment for the website",
+  description: "Commonwealth Asset Trust Investment company, formally known as solid rock investment  ",
   keywords: "investment, trust, asset management, finance",
   openGraph: {
     title: "Commonwealth Asset Trust Investment company.",
-    description: "Commonwealth Asset Trust Investment company, formally known as solid rock investment for the website",
+    description: "Commonwealth Asset Trust Investment company, formally known as solid rock investment ",
     url: "https://www.commonwealthassettrustnvestmentcompany.com/",
     siteName: "Commonwealth Asset Trust",
     images: [
