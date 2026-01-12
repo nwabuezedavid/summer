@@ -29,7 +29,7 @@ const session = await getSession();
           where: { id: inv.userId },
           data: {
             profitBalance: {
-              increment: inv.profit,
+              increment: inv.profit + inv.amount ,
             },
           },
         }),
