@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import DataTable from "@/componenet/tableall";
+import DataTable from "@/componenet/tableforalltrans";
 import { getAllTransactions } from "@/action/tablelog";
  
 

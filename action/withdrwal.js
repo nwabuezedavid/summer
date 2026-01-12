@@ -11,8 +11,9 @@ export async function withdrawAction(formData) {
   if (!session) return { error: "Unauthorized" };
 
   const method = formData.get("method"); // BTC | USDT | ETH
+  const address = formData.get("address"); // BTC | USDT | ETH
   const amount = Number(formData.get("amount"));
-  const wallet = "MAIN"; // or PROFIT if you later add switch
+  const wallet = "PROFIT"; // or PROFIT if you later add switch
 
   if (!method || !amount || amount <= 0) {
     return { error: "Invalid withdrawal data" };

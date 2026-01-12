@@ -78,7 +78,7 @@ export   function WalletCard() {
       <div className="text-xs text-slate-300">
         🔒 Verify KYC for $500+ withdrawals{' '}
         <Link href={`/kyc/`} className="text-pink-500 cursor-pointer font-medium">
-          
+          Submit
         </Link>
       </div>
 

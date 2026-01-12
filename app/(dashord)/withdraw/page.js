@@ -6,7 +6,8 @@ import { toast } from 'sonner';
 
 export default function WithdrawMoneyPage() {
   const [method, setMethod] = useState('');
-  const [amount, setAmount] = useState('');
+  const [amount,  setAmount] = useState('');
+  const [address, setaddress] = useState('');
   const [btn, setbtn] = useState(false);
 const handle = async (e)=>  {
   setbtn(true)
@@ -74,6 +75,14 @@ const handle = async (e)=>  {
               onChange={(e) => setAmount(e.target.value)}
               className={inputClass}
               name='amount'
+            />
+          </Field>
+          <Field label="Address">
+            <input
+              value={address}
+              onChange={(e) => setaddress(e.target.value)}
+              className={inputClass}
+              name='address'
             />
           </Field>
         </div>
