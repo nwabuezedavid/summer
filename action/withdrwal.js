@@ -51,7 +51,7 @@ if (amount >= 499 && user.kycStatus === 'PENDING'  ) {
         userId: session.id,
         amount,
         crypto: method,
-        wallet,
+        address,
         status: "PENDING",
       },
     }),
