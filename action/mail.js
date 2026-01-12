@@ -23,14 +23,19 @@ export async function sendEmail({
   html,
   fromName = "Commonwealth Asset Trust Investment company",
 }) {
-  if (!to || !subject || !html) {
-    throw new Error("Missing email parameters");
-  }
+  try {
+    if (!to || !subject || !html) {
+      throw new Error("Missing email parameters");
+    }
 
-  return transporter.sendMail({
-    from: `"${fromName}" <${process.env.EMAIL_HOST_USER}>`,
-    to,
-    subject,
-    html,
-  });
+    return await transporter.sendMail({
+      from: `"${fromName}" <${process.env.EMAIL_HOST_USER}>`,
+      to,
+      subject,
+      html,
+    });
+  } catch (error) {
+    console.error("Email sending failed:", error);
+    // re-throw to handle it elsewhere
+  }
 }

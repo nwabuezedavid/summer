@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/action/db";
-import { useId } from "react";
+import { sendEmail } from "@/action/mail";
+import { investmentEmail } from "@/action/admainmail/investment";
 
 // Define the Investment model type
 interface Investment {
@@ -34,7 +35,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
 
 if (status === 'COMPLETED'){
-  await prisma.user.update({
+ const mainuser =  await prisma.user.update({
     where:{          
 id:Number(userId)
     },
@@ -44,6 +45,19 @@ id:Number(userId)
       },
     }
   })
+  await sendEmail({
+  to: mainuser.email ,
+  subject: "investment Completed",
+  html:  investmentEmail({
+ username: mainuser.username,
+ plan: updatedInvestment.plan,
+ amount: updatedInvestment.amount,
+ profit: updatedInvestment.profit,
+ duration: updatedInvestment.duration,
+ status: updatedInvestment.status,
+})
+});
+
 }
     if (!updatedInvestment) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });

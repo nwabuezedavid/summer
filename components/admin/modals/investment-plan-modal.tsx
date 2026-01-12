@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
+import SubmitButton from "@/action/btnwe"
 
 interface InvestmentPlan {
   id?: number
@@ -144,9 +145,7 @@ export default function InvestmentPlanModal({ plan, onSave, onClose }: Props) {
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-              {plan ? "Update" : "Create"}
-            </Button>
+            <SubmitButton />
           </div>
         </form>
       </DialogContent>

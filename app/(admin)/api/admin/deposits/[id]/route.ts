@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/action/db";
-
+import { sendEmail } from "@/action/mail";
+import { depositEmail } from "@/action/admainmail/admindeposit";
 // Define the Deposit model type
 interface Deposit {
   id: number;
@@ -20,7 +21,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const id = Number(numberc);
     const data = await request.json();
   if (data.status === 'APPROVED') {
-  await prisma.user.update({
+   await prisma.user.update({
     where: {
       id: data.userId,
     },
@@ -60,9 +61,33 @@ delete data.user;
             mainBalance: user.mainBalance + updatedDeposit.amount,
           },
         });
+
+
       }
     }
 
+
+
+ const userAdmin = await prisma.User.findUnique({
+        where: {
+          id: updatedDeposit.userId,
+        },
+      });
+
+
+
+
+  await sendEmail({
+  to: userAdmin.email ,
+  subject: "Deposit Status Update",
+  html: depositEmail({
+    username: userAdmin.username,
+    amount: updatedDeposit.amount,
+    method: updatedDeposit.crypto,
+    status: updatedDeposit.status, // PENDING | APPROVED | REJECTED
+    txId: updatedDeposit.id,
+  }),
+});
     return NextResponse.json(updatedDeposit);
   } catch (error) {
     console.error(error);

@@ -1,5 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/action/db";
+import { sendEmail } from "@/action/mail";
+import { withdrawalEmail } from "@/action/admainmail/withdrwaladmin";
 
 // Define the Withdrawal model type
 interface Withdrawal {
@@ -18,7 +20,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
      const { id:numberc } = await params;
     const id = Number(numberc);
     const data = await request.json();
+
+    
     delete data.user;
+     
     const updatedWithdrawal = await prisma.withdrawal.update({
       where: {
         id:id,
@@ -26,6 +31,23 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       data:data,
     });
 
+ const userAdmin = await prisma.User.findUnique({
+        where: {
+          id: updatedWithdrawal.userId,
+        },
+      });
+await sendEmail({
+      to: userAdmin.email ,
+      subject: "withdrawal Status Update",
+      html:   withdrawalEmail({
+    username: userAdmin.username,
+    amount: updatedWithdrawal.amount,
+    method: updatedWithdrawal.crypto,
+    wallet: updatedWithdrawal.wallet,
+    status: updatedWithdrawal.status,
+    txId: updatedWithdrawal.id,
+  }),
+    });
     if (!updatedWithdrawal) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }

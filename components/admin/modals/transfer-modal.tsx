@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { getAlluser } from "../action"
+import SubmitButton from "@/action/btnwe"
 
 interface Transfer {
   id?: number
@@ -117,9 +118,7 @@ const [allusers, setallusers] = useState([])
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-              {transfer ? "Update" : "Create"}
-            </Button>
+          <SubmitButton />
           </div>
         </form>
       </DialogContent>
