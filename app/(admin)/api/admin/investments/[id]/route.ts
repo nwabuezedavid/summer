@@ -50,10 +50,10 @@ id:Number(userId)
   subject: "investment Completed",
   html:  investmentEmail({
  username: mainuser.username,
- plan: updatedInvestment.plan,
+ plan: updatedInvestment.plan.name,
  amount: updatedInvestment.amount,
  profit: updatedInvestment.profit,
- duration: updatedInvestment.duration,
+ duration: updatedInvestment.plan.duration,
  status: updatedInvestment.status,
 })
 });

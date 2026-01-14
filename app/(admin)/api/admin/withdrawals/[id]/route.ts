@@ -36,6 +36,9 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
           id: updatedWithdrawal.userId,
         },
       });
+      console.log(userAdmin.email);
+      console.log(updatedWithdrawal);
+      
 await sendEmail({
       to: userAdmin.email ,
       subject: "withdrawal Status Update",

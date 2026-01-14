@@ -3,10 +3,12 @@
 import prisma from "@/action/db";
 import { getSession } from "@/lib/session";
 import { createNotification } from "./authaction";
+import { investmentEmail } from "./admainmail/investment";
 
 export async function matureInvestments() {
   const now = new Date();
-const session = await getSession();
+  const session = await getSession();
+
   try {
     const investments = await prisma.investment.findMany({
       where: {
@@ -19,17 +21,17 @@ const session = await getSession();
       },
     });
 
-    console.log(investments);
-
     let maturedCount = 0;
 
     for (const inv of investments) {
+      const totalAmount = Number(inv.profit) + Number(inv.amount);
+
       await prisma.$transaction([
         prisma.user.update({
           where: { id: inv.userId },
           data: {
             profitBalance: {
-              increment: Number(inv.profit) +  Number(inv.amount) ,
+              increment: totalAmount,
             },
           },
         }),
@@ -38,7 +40,6 @@ const session = await getSession();
           where: { id: inv.id },
           data: {
             status: "COMPLETED",
-            
           },
         }),
 
@@ -56,12 +57,24 @@ const session = await getSession();
 
       maturedCount++;
 
-      
+      await sendEmail({
+        to: session.email,
+        subject: "Investment Completed",
+        html: investmentEmail({
+          username: session.username,
+          plan: inv.plan.name,
+          amount: inv.amount,
+          profit: inv.profit,
+          duration: inv.plan.duration,
+          status: "COMPLETED",
+        }),
+      });
+
       createNotification({
-        userId: inv.userId, // Use inv.userId instead of session.id
+        userId: inv.userId,
         title: `Investment Reminder`,
-        message: `Your investment of ${inv.amount} in the investment Plan has matured. Please take action to continue earning.`,
-      })
+        message: `Your investment of ${inv.amount} in the ${inv.plan.name} Plan has matured.`,
+      });
     }
 
     return { matured: maturedCount };
