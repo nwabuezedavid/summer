@@ -27,6 +27,7 @@ export default function UserFormModal({ user, onClose, onSuccess }: Props) {
     email: user?.email || "",
     username: user?.username || "",
     balance: user?.mainBalance || 0,
+    pbalance: user?.profitBalance || 0,
     password: user?.password,
   })
   const [loading, setLoading] = useState(false)
@@ -103,6 +104,17 @@ export default function UserFormModal({ user, onClose, onSuccess }: Props) {
               type="number"
               value={formData.balance}
               onChange={(e) => setFormData({ ...formData, balance: Number(e.target.value) })}
+              className="bg-slate-700 border-slate-600 text-white"
+              min="0"
+              step="0.01"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">profit Balance</label>
+            <Input
+              type="number"
+              value={formData.pbalance}
+              onChange={(e) => setFormData({ ...formData, pbalance: Number(e.target.value) })}
               className="bg-slate-700 border-slate-600 text-white"
               min="0"
               step="0.01"

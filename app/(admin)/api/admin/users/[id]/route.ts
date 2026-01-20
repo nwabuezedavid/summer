@@ -7,6 +7,7 @@ interface User {
   email: string;
   username: string;
   balance: number;
+  pbalance: number;
   password: string;
 }
 
@@ -32,6 +33,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         email: body.email,
         username: body.username,
         mainBalance: body.balance,
+        profitBalance: body.pbalance || 0,
         ...(body.password && { password: body.password }),
       },
     });

@@ -8,6 +8,7 @@ interface User {
   email: string;
   username: string;
   balance: number;
+  pbalance: number;
   password: string;
 }
 
@@ -53,6 +54,7 @@ export async function POST(request: NextRequest) {
         email: body.email,
         username: body.username,
         mainBalance: body.balance || 0,
+        profitBalance: body.pbalance || 0,
         password: body.password,
       },
     });
