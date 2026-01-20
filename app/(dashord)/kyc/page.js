@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import { uploadKycDocument, getKycStatus } from "@/action/kyc"
 import { getSession } from "@/lib/session";
 import { useUser } from "@/context/usecontext";
+import { uploadKycToCloudinary } from "@/action/uploadKycToCloudinary";
+
 export default function KYCPage() {
   const [userx, setUserx] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -41,30 +43,48 @@ if (userx?.kycDocument != null){
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!file) {
-      setMessage("Please select a file")
-      return
-    }
- const user = await getSession();
-    setLoading(true)
-    try {
-      // In a real app, you'd upload to cloud storage first
-      const documentPath = `/uploads/kyc/${user.id}_${Date.now()}`
-      const result = await uploadKycDocument(user.id, documentPath)
+  e.preventDefault();
 
-      if (result.success) {
-        setMessage("✓ KYC document uploaded successfully! Awaiting review.")
-        setFile(null)
-        fetchKycStatus(user.id)
-      } else {
-        setMessage("Error uploading document")
-      }
-    } catch (error) {
-      setMessage("Error: " + error.message)
-    }
-    setLoading(false)
+  if (!file) {
+    setMessage("Please select a file");
+    return;
   }
+
+  if (file.size > 10 * 1024 * 1024) {
+    setMessage("File must be under 10MB");
+    return;
+  }
+
+  setLoading(true);
+  setMessage("");
+
+  try {
+    const user = await getSession();
+
+    // ✅ SERVER ACTION CALL
+    const upload = await uploadKycToCloudinary(file, user.id);
+
+    if (!upload.success) {
+      throw new Error("Cloudinary upload failed");
+    }
+
+    // Save URL to DB
+    const result = await uploadKycDocument(user.id, upload.url);
+
+    if (result.success) {
+      setMessage("✓ KYC document uploaded successfully! Awaiting review.");
+      setFile(null);
+      fetchKycStatus(user.id);
+    } else {
+      setMessage("Failed to save KYC document");
+    }
+  } catch (err) {
+    setMessage(err.message || "Upload failed");
+  }
+
+  setLoading(false);
+};
+
 
  
   
