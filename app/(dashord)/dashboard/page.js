@@ -473,7 +473,7 @@ console.log(statss);
 
   
   const referralUrl =
-    `${process.env.NEXT_PUBLIC_BASE_URL}/register/${user?.referralCode}`;
+    `${process.env.NEXT_PUBLIC_BASE_URL}/register?ref=${user?.referralCode}`;
 
   const stats = [
   { label: "All Transactions", value: statss.allTransactions },
