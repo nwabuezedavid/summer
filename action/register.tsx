@@ -131,7 +131,7 @@ console.log(user);
     <label htmlFor="email" className="flex flex-col    text-left  ">
       <h1 className="flex text-xs text-gray-600 capitalize">country</h1>
       
-      <select onChange={handleChange} required name="country" className="w-full border-b-1 text-xs mt-2 hover:border-b-green-600 focus:border-b-2 focus:border-b-green-600  outline-none border-b-gray-400" autocomplete="country" id="country"  >
+      <select onChange={handleChange} required name="country" className="w-full border-b-1 text-xs mt-2 hover:border-b-green-600 focus:border-b-2 focus:border-b-green-600  outline-none border-b-gray-400"   id="country"  >
     <option>select country</option>
     <option value="AF">Afghanistan</option>
     <option value="AX">Åland Islands</option>
