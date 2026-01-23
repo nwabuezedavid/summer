@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-
+import { Suspense } from "react";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -88,6 +88,8 @@ console.log(user);
     }));
   };
   return (
+
+     <Suspense fallback="Loading...">
     <div className="w-full h-full text-black flex flex-col">
     <span  className="flex w-full text-center flex-col">
 <h1 className="text-2xl font-bold">💪 create an account </h1>
@@ -420,5 +422,6 @@ console.log(user);
     </span>
     </form>
     </div>
+    </Suspense>
   );
 }
