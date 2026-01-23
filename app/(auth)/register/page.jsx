@@ -18,7 +18,7 @@ const [user, setuser] = useState({
     email: "",
     username: "",
     country: "",
-    referralcode: ref || "",
+    referralcode: "",
     password: "",
     cpassword: "",
   })
@@ -36,7 +36,14 @@ useEffect(() => {
     console.log("Cleanup function called");
   };
 }, [ ]);
-
+useEffect(() => {
+  if (ref) {
+    setuser((prev) => ({
+      ...prev,
+      referralcode: ref,
+    }));
+  }
+}, [ref]);
 
 const handlesubmit = (e)=>{
   setloadng(true)
