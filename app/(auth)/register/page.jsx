@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createUser } from "@/action/authaction";
+import { useSearchParams } from "next/navigation";
 export default function HomeSsjsSS() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [loadng, setloadng] = useState(false)
 const [user, setuser] = useState({
     fname: "",
