@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 export default function HomeSsjsSS() {
     const router = useRouter();
     const searchParams = useSearchParams();
+      const ref = searchParams.get("ref");
     const [loadng, setloadng] = useState(false)
 const [user, setuser] = useState({
     fname: "",
@@ -17,7 +18,7 @@ const [user, setuser] = useState({
     email: "",
     username: "",
     country: "",
-    referralcode: "",
+    referralcode: ref || "",
     password: "",
     cpassword: "",
   })
