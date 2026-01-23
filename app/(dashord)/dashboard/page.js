@@ -163,7 +163,7 @@ export   function RecentAndReferral() {
 
   const {user,setuser} = useUser()
   const referralUrl =
-    `${process.env.NEXT_PUBLIC_BASE_URL}/register/user/${user?.referralCode}`;
+    `${process.env.NEXT_PUBLIC_BASE_URL}/register?ref=${user?.referralCode}`;
   const copyLink = async () => {
     await navigator.clipboard.writeText(referralUrl);
   };
