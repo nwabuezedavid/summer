@@ -19,7 +19,7 @@ export default function KYCPage() {
     console.log(userx);
       
   }, [])
-if (userx?.kycDocument == "PENDING"){
+if (userx?.kycDocument !=null && userx?.kycStatus == "PENDING"){
     return (
         <div className="p-5 justify-center  self-center text-center border border-gray-200 rounded-lg shadow-md">
     <h3 className="text-lg font-bold">
@@ -29,7 +29,7 @@ if (userx?.kycDocument == "PENDING"){
   </div>
     )
 }
-  if (userx?.kycDocument == "APPROVED"){
+  if (userx?.kycStatus == "APPROVED"){
     return (
         <div className="p-5 justify-center  self-center text-center border border-gray-200 rounded-lg shadow-md">
     <h3 className="text-lg font-bold">
