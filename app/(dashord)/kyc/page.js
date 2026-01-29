@@ -111,7 +111,7 @@ if (userx?.kycDocument == "PENDING"){
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">KYC Verification</h1>
+          <h1 className="text-4xl font-bold text-white mb-2">KYC Verification ({userx?.kycDocument})</h1>
           <p className="text-gray-600">Complete your identity verification to unlock full platform access</p>
         </div>
 
