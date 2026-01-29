@@ -32,6 +32,16 @@ if (userx?.kycDocument != null){
   </div>
     )
 }
+  if (userx?.kycDocument != "APPROVED"){
+    return (
+        <div className="p-5 justify-center  self-center text-center border border-gray-200 rounded-lg shadow-md">
+    <h3 className="text-lg font-bold">
+      KYC Status: 
+      <span className="text-orange-500">KYC APPROVED </span>
+    </h3>
+  </div>
+    )
+  }
   const fetchKycStatus = async (userId) => {
     const result = await getKycStatus(userId)
     if (result.success) {
