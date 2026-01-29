@@ -29,7 +29,7 @@ if (userx?.kycDocument != null & userx?.kycDocument != "APPROVED"){
   </div>
     )
 }
-  if (userx?.kycDocument != "APPROVED"){
+  if (userx?.kycDocument == "APPROVED"){
     return (
         <div className="p-5 justify-center  self-center text-center border border-gray-200 rounded-lg shadow-md">
     <h3 className="text-lg font-bold">
