@@ -34,7 +34,7 @@ if (userx?.kycDocument !=null && userx?.kycStatus == "PENDING"){
         <div className="p-5 justify-center  self-center text-center border border-gray-200 rounded-lg shadow-md">
     <h3 className="text-lg font-bold">
       KYC Status: 
-      <span className="text-orange-500">KYC APPROVED </span>
+      <span className="text-green-500"> DOCUMENT APPROVED </span>
     </h3>
   </div>
     )
