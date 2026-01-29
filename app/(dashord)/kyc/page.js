@@ -16,10 +16,7 @@ export default function KYCPage() {
   const data = useUser()
   useEffect(   () => {
          setUserx(data.user)
-    // Get user from localStorage
     console.log(userx);
-    
-     
       
   }, [])
 if (userx?.kycDocument != null){
