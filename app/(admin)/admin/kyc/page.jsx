@@ -16,7 +16,7 @@ export default function AdminKYCPage() {
   const router = useRouter()
   useEffect(() => {
     fetchSubmissions()
-  }, [filter])
+  }, [filter,selectedUser])
   const  handleDelete = async (id) => {
     console.log('Delete');
     
