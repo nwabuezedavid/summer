@@ -23,6 +23,21 @@ export async function uploadKycDocument(userId, documentPath) {
   }
 }
 
+export async function getKycStatusRemoves(userId) {
+  try {
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        kycDocument: null,
+       
+      },
+    })
+    return { success: true, data: user }
+  } catch (error) {
+    console.error("[v0] KYC status error:", error)
+    return { success: false, error: error.message }
+  }
+}
 export async function getKycStatus(userId) {
   try {
     const user = await prisma.user.findUnique({

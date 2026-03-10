@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { getKycSubmissions, approveKyc, rejectKyc } from "@/action/kyc"
+import { getKycSubmissions,getKycStatusRemoves, approveKyc, rejectKyc } from "@/action/kyc"
 import AdminLayout from "@/components/admin/admin-layout"
+import { useRouter } from "next/navigation"
 
 export default function AdminKYCPage() {
   const [submissions, setSubmissions] = useState([])
@@ -16,7 +17,14 @@ export default function AdminKYCPage() {
   useEffect(() => {
     fetchSubmissions()
   }, [filter])
-
+  const  handleDelete = async (id) => {
+    console.log('Delete');
+    
+    await getKycStatusRemoves(id)
+    router.push('/admin/kyc')  
+    setSelectedUser(null) // reload server components
+    console.log('end Delete');
+}
   const fetchSubmissions = async () => {
     setLoading(true)
     const result = await getKycSubmissions(filter === "ALL" ? null : filter)
@@ -175,6 +183,16 @@ export default function AdminKYCPage() {
                       {selectedUser.kycStatus}
                     </p>
                   </div>
+
+                  <div>
+                    <p className="text-sm text-gray-600">ACTION</p>
+                    <button 
+                     onClick={()=>handleDelete(selectedUser.id)}
+
+                      className={`font-medium px-3 bg-red-600 text-white cursor-pointer hover:bg-black py-1 rounded text-sm inline-block ${getStatusBadge(selectedUser.kycStatus)}`}
+                    >
+                     Delete KYC
+                    </button>
                 </div>
               </div>
 
