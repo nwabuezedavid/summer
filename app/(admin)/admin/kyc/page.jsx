@@ -13,7 +13,7 @@ export default function AdminKYCPage() {
   const [adminNote, setAdminNote] = useState("")
   const [rejectionReason, setRejectionReason] = useState("")
   const [message, setMessage] = useState("")
-
+  const router = useRouter()
   useEffect(() => {
     fetchSubmissions()
   }, [filter])
