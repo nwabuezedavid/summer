@@ -184,7 +184,7 @@ export default function AdminKYCPage() {
                     </p>
                   </div>
 
-                  <div>
+                                    <div>
                     <p className="text-sm text-gray-600">ACTION</p>
                     <button 
                      onClick={()=>handleDelete(selectedUser.id)}
@@ -193,6 +193,7 @@ export default function AdminKYCPage() {
                     >
                      Delete KYC
                     </button>
+                  </div>
                 </div>
               </div>
 
