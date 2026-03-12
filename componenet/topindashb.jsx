@@ -87,9 +87,9 @@ export default function TopBar(data) {
       {/* Right Side */}
       <div className="flex items-center gap-4">
         {/* Theme */}
-        <button className="text-white">
+        <Link href={'/settings'} className="text-white">
           <i className="fa fa-sun"></i>
-        </button>
+        </Link>
 
         {/* Notification */}
         <Link href={'/notifications'} className="relative text-white">
