@@ -92,12 +92,12 @@ export default function TopBar(data) {
         </button>
 
         {/* Notification */}
-        <button className="relative text-white">
+        <Link href={'/notifications'} className="relative text-white">
           <i className="fa fa-bell"></i>
           <span className="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
             1
           </span>
-        </button>
+        </Link >
 
         {/* Language Selector */}
         <div className="relative">
