@@ -66,7 +66,7 @@ export async function getReferralTree() {
   };
 
   return {
-    referralUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/register?invite=${rootUser.referralCode}`,
+    referralUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/register?ref=${rootUser.referralCode}`,
     tree,
   };
 }
