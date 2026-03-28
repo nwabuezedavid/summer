@@ -60,22 +60,45 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
         <video className="w-1/2 max-md:w-full h-[300px] object-fill p-3" muted playsInline autoPlay loop>
           <source src="./bg1.mp4" type="video/mp4" />
         </video>
-        <div className="text-black p-4 flex flex-col w-1/2 max-md:w-full justify-center">
-          <h1 className="font-bold text-3xl p-2 w-fit rounded-md uppercase">{siteName}</h1>
-          <p className="text-gray-600 p-4">
-            Grow Your Wealth with Confidence. Welcome to a smarter way to invest. Our platform lets you choose
-            investment plans with specific durations and guaranteed profit returns. Whether you're saving for the short
-            term or building long-term wealth, we make it easy, transparent, and secure.
-          </p>
-          <ul className="list-disc list-inside mt-3 text-sm text-gray-700 pl-4 space-y-1">
-            <li>Intuitive, beginner-friendly interface</li>
-            <li>Real-time market data and smart analytics</li>
-            <li>Ultra-low trading fees and zero hidden charges</li>
-            <li>Fully responsive — trade from any device</li>
-            <li>Bank-level security and biometric login</li>
-            <li>Global markets, local support</li>
-          </ul>
-        </div>
+        <div className="text-gray-900 p-6 lg:p-10 flex flex-col w-1/2 max-md:w-full justify-center">
+  
+  {/* Heading */}
+  <div className="mb-4">
+    <h1 className="font-bold text-3xl lg:text-4xl tracking-tight uppercase">
+      {siteName}
+    </h1>
+    <div className="w-16 h-1 bg-indigo-600 mt-2 rounded"></div>
+  </div>
+
+  {/* Description */}
+  <p className="text-gray-600 leading-relaxed text-base lg:text-lg mb-6">
+    <span className="font-semibold text-gray-900">
+      Grow Your Wealth with Confidence.
+    </span>{" "}
+    Welcome to a smarter way to invest. Our platform empowers you to choose
+    investment plans with defined durations and reliable profit returns.
+    Whether you're saving for the short term or building long-term wealth,
+    we deliver a seamless, transparent, and secure investment experience.
+  </p>
+
+  {/* Features */}
+  <ul className="space-y-3 text-gray-700">
+    {[
+      "Intuitive, beginner-friendly interface",
+      "Real-time market data and smart analytics",
+      "Ultra-low trading fees with zero hidden charges",
+      "Fully responsive — access from any device",
+      "Bank-level security with advanced authentication",
+      "Global market access with localized support",
+    ].map((item, index) => (
+      <li key={index} className="flex items-start gap-3">
+        <span className="mt-1 w-2 h-2 bg-indigo-600 rounded-full"></span>
+        <span className="text-sm lg:text-base">{item}</span>
+      </li>
+    ))}
+  </ul>
+
+</div>
       </section>
 <section className="bg-gray-50 py-16 px-6 lg:px-20">
       <div className="max-w-6xl mx-auto">
