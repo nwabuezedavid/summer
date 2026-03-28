@@ -161,9 +161,7 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
               Join us on our journey toward creating a future where businesses thrive, economies prosper, and communities benefit from enduring progress and stability.
             </p>
 
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-lg shadow-md transition duration-300">
-              Get Started
-            </button>
+           
           </div>
 
         </div>
