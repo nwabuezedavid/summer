@@ -31,7 +31,98 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
           className="w-full h-full object-contain"
         />
       </div>
+ <section className="bg-gray-50 py-16 px-6 lg:px-20">
+      <div className="max-w-6xl mx-auto">
+        
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            The New Era of Global Prosperity
+          </h2>
+          <div className="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded"></div>
+        </div>
 
+        {/* Main Card */}
+        <div className="bg-white shadow-xl rounded-2xl p-8 lg:p-12 border border-gray-100">
+          
+          {/* Intro */}
+          <p className="text-lg text-gray-600 leading-relaxed mb-6">
+            <span className="font-semibold text-gray-900">
+              Commonwealth Asset Trust
+            </span>{" "}
+            is a global powerhouse headquartered in the Netherlands and France,
+            with an extensive footprint in{" "}
+            <span className="font-medium text-indigo-600">
+              Real Estate Investment
+            </span>
+            ,{" "}
+            <span className="font-medium text-indigo-600">
+              Insurance Investment
+            </span>
+            ,{" "}
+            <span className="font-medium text-indigo-600">
+              Agriculture Investment
+            </span>
+            , digital assets, technology, energy, finance, and strategic consulting.
+          </p>
+
+          <p className="text-gray-600 leading-relaxed mb-6">
+            We bridge the gap between innovation and sustainability, driving economic growth, empowering businesses, and transforming industries with forward-thinking solutions.
+          </p>
+
+          <p className="text-gray-600 leading-relaxed mb-10">
+            With a robust presence across Europe, Asia, the Middle East, and Africa, Commonwealth Asset Trust is a trusted partner in delivering high-impact investments, sustainable business strategies, and market-defining solutions that reshape the paradigm of success.
+          </p>
+
+          {/* Vision */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 mb-8">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Our Vision
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+              To be a world-class, industry-leading corporation, fostering innovation, sustainability, and economic growth while empowering individuals, businesses, and communities worldwide.
+            </p>
+          </div>
+
+          {/* Grid Section */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            
+            {/* Approach */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Our Approach
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                At Commonwealth Asset Trust, we embrace a forward-thinking approach, leveraging advanced technologies and strategic insights to create value-driven solutions.
+              </p>
+            </div>
+
+            {/* Mission */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Our Mission
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                We provide tailored financial and strategic services that not only meet but exceed our clients' expectations, delivering sustainable growth and long-term profitability.
+              </p>
+            </div>
+
+          </div>
+
+          {/* CTA */}
+          <div className="mt-12 text-center">
+            <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
+              Join us on our journey toward creating a future where businesses thrive, economies prosper, and communities benefit from enduring progress and stability.
+            </p>
+
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-lg shadow-md transition duration-300">
+              Get Started
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
       {/* Stats Section */}
       <section className="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white px-6 py-16">
         <div className="max-w-6xl mx-auto text-center">
