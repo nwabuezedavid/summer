@@ -31,7 +31,53 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
           className="w-full h-full object-contain"
         />
       </div>
- <section className="bg-gray-50 py-16 px-6 lg:px-20">
+ 
+      {/* Stats Section */}
+      <section className="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white px-6 py-16">
+        <div className="max-w-6xl mx-auto text-center">
+          <h3 className="text-indigo-400 font-semibold text-sm uppercase mb-2">Our track record</h3>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            Trusted by thousands of investors globally
+          </h2>
+          <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto">
+            With a focus on transparency, security, and performance, we've built a platform where investors can
+            confidently grow their money.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-12 text-center">
+            {stats.map((stat, idx) => (
+              <div key={idx}>
+                <p className="text-3xl font-extrabold">{stat.value}</p>
+                <p className="text-sm text-gray-400 mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Welcome Section */}
+      <section className="w-full flex mt-[4%] max-md:flex-col-reverse text-black min-h-[400px] gap-4">
+        <video className="w-1/2 max-md:w-full h-[300px] object-fill p-3" muted playsInline autoPlay loop>
+          <source src="./bg1.mp4" type="video/mp4" />
+        </video>
+        <div className="text-black p-4 flex flex-col w-1/2 max-md:w-full justify-center">
+          <h1 className="font-bold text-3xl p-2 w-fit rounded-md uppercase">{siteName}</h1>
+          <p className="text-gray-600 p-4">
+            Grow Your Wealth with Confidence. Welcome to a smarter way to invest. Our platform lets you choose
+            investment plans with specific durations and guaranteed profit returns. Whether you're saving for the short
+            term or building long-term wealth, we make it easy, transparent, and secure.
+          </p>
+          <ul className="list-disc list-inside mt-3 text-sm text-gray-700 pl-4 space-y-1">
+            <li>Intuitive, beginner-friendly interface</li>
+            <li>Real-time market data and smart analytics</li>
+            <li>Ultra-low trading fees and zero hidden charges</li>
+            <li>Fully responsive — trade from any device</li>
+            <li>Bank-level security and biometric login</li>
+            <li>Global markets, local support</li>
+          </ul>
+        </div>
+      </section>
+<section className="bg-gray-50 py-16 px-6 lg:px-20">
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
@@ -123,52 +169,6 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
         </div>
       </div>
     </section>
-      {/* Stats Section */}
-      <section className="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white px-6 py-16">
-        <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-indigo-400 font-semibold text-sm uppercase mb-2">Our track record</h3>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Trusted by thousands of investors globally
-          </h2>
-          <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto">
-            With a focus on transparency, security, and performance, we've built a platform where investors can
-            confidently grow their money.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-12 text-center">
-            {stats.map((stat, idx) => (
-              <div key={idx}>
-                <p className="text-3xl font-extrabold">{stat.value}</p>
-                <p className="text-sm text-gray-400 mt-1">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Welcome Section */}
-      <section className="w-full flex mt-[4%] max-md:flex-col-reverse text-black min-h-[400px] gap-4">
-        <video className="w-1/2 max-md:w-full h-[300px] object-fill p-3" muted playsInline autoPlay loop>
-          <source src="./bg1.mp4" type="video/mp4" />
-        </video>
-        <div className="text-black p-4 flex flex-col w-1/2 max-md:w-full justify-center">
-          <h1 className="font-bold text-3xl p-2 w-fit rounded-md uppercase">{siteName}</h1>
-          <p className="text-gray-600 p-4">
-            Grow Your Wealth with Confidence. Welcome to a smarter way to invest. Our platform lets you choose
-            investment plans with specific durations and guaranteed profit returns. Whether you're saving for the short
-            term or building long-term wealth, we make it easy, transparent, and secure.
-          </p>
-          <ul className="list-disc list-inside mt-3 text-sm text-gray-700 pl-4 space-y-1">
-            <li>Intuitive, beginner-friendly interface</li>
-            <li>Real-time market data and smart analytics</li>
-            <li>Ultra-low trading fees and zero hidden charges</li>
-            <li>Fully responsive — trade from any device</li>
-            <li>Bank-level security and biometric login</li>
-            <li>Global markets, local support</li>
-          </ul>
-        </div>
-      </section>
-
       {/* Trust Indicators */}
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4">
