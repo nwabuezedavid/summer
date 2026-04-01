@@ -71,6 +71,7 @@ export async  function resetPassword(id,password) {
   
   if (!id ) return { error: "User not found" } 
   if (!password ) return  { error: "User not found" } 
+  if (password == "" ) return  { error: "pasword empty" } 
   const user  = await prisma.user.update({
     where:{
        token:id

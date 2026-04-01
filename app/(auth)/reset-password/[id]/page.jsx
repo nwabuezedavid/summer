@@ -19,6 +19,7 @@ const [user, setuser] = useState({
 const  submittePass = async (e) => {
   if (user.password !== user.cpassword){
      toast.error(`{ password mismatch }`)
+     return 
   }
   e.preventDefault();
   setloadng(true)
