@@ -1,7 +1,9 @@
 // app/api/auth/reset-password/route.js
+"use server"
+
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import prisma from "@/lib/prisma";
+import prisma from "@/action/db";
 import crypto from "crypto";
 
 export async function POST(req) {
@@ -37,11 +39,11 @@ export async function POST(req) {
       },
     });
 
-    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`;
+    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password/${token}/`;
 
     // Send email
     await transporter.sendMail({
-      from: `"Adoniss Shelters" <${process.env.EMAIL_HOST_USER}>`,
+      from: `"commonwealthassettrustnvestmentcompany" <${process.env.EMAIL_HOST_USER}>`,
       to: email,
       subject: "Reset Your Password",
       html: `
@@ -57,4 +59,28 @@ export async function POST(req) {
     console.error(err);
     return NextResponse.json({ error: "Failed to send password reset email" }, { status: 500 });
   }
+}
+
+
+
+
+ 
+
+export async  function resetPassword(id,password) {
+  console.log(id, password);
+  
+  if (!id ) return { error: "User not found" } 
+  if (!password ) return  { error: "User not found" } 
+  const user  = await prisma.user.update({
+    where:{
+       token:id
+    },
+    data:{
+      password:password
+    }
+  })
+ 
+  if (!user) return  { error: "User not found" } 
+  if (user) return  { success: "password updated" } 
+   
 }
