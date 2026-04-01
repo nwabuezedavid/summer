@@ -255,7 +255,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-  const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`;
+  const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password/${token}/`;
 
   // Send email
   await transporter.sendMail({
