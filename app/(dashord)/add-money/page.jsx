@@ -128,7 +128,7 @@ useEffect(() => {
               <span className={suffixClass}>USD</span>
             </div>
             <p className="text-xs text-red-400 mt-1">
-              Minimum 100 USD and Maximum 100000 USD
+              Minimum 50 USD and Maximum 100000 USD
             </p>
           </div>
         </div>
