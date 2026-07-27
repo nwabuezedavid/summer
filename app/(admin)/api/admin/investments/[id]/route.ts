@@ -21,13 +21,17 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const id = Number(numberc);
     const data = await request.json();
     
-    const {planId,profit,startedAt,endsAt,status,userId,amount} = data
+    const {planId ,profit,startedAt,endsAt,status,userId,amount} = data
+   const mainstartdata = new Date(startedAt)
+   const mainstartdataendsAt = new Date(endsAt)
+   const mainplanId =planId as number
+   
     console.log(data.user.mainBalance);
     const updatedInvestment = await prisma.investment.update({
       where: {
         id,
       },
-      data:{planId,amount,profit,startedAt,endsAt,status}
+      data:{planId:mainplanId,amount,profit,startedAt:mainstartdata,endsAt:mainstartdataendsAt,status}
        
      
     });
